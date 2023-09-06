@@ -35,51 +35,75 @@ bool ReadBoolean (string message)
 {
     Console.WriteLine(message);
 
-    string value = Console.ReadLine();
+    while (true)
+    {
+        var value = Console.ReadLine();
+        if (value == "Y" || value == "y")
+            return true;
+        else if (value == "N" || value == "n")
+            return false;
 
-    if (value == "Y" || value == "y")
-        return true;
-    else if(value == "N" || value == "n")
-        return false;
-
-    //TODO: Handle errors
-    return false;
+        Console.WriteLine("Please enter Y/N");
+    };
+ 
+    
 }
 
 void DisplayMovie ()
 {
-    Console.WriteLine(title);
-    Console.WriteLine(description);
-    Console.WriteLine(length);
-    Console.WriteLine(releaseYear);
-    Console.WriteLine(genre);
-    Console.WriteLine(rating);
-    Console.WriteLine(isBlackAndWhite);
+
+    Console.WriteLine("\n------------------------");
+    Console.WriteLine("\nThe title is " + title);
+    Console.WriteLine("Description: " + description);
+    Console.WriteLine("The movie length is " + length + " mins");
+    Console.WriteLine("The release year is " + releaseYear);
+    Console.WriteLine("The genre is " + genre);
+    Console.WriteLine("The MPAA rating is " + rating);
+
+    Console.WriteLine(isBlackAndWhite ? "The movie is black and white." : "The movie is not black and white.");
+    /*
+    if (isBlackAndWhite)
+    {
+        Console.WriteLine("The movie is black and white.");
     
+   } else
+    {
+        Console.WriteLine("The movie is not black and white.");
+    }
+  */
+
 }
 
 int ReadInt (string message, int minimumValue)
 {
     Console.WriteLine(message);
-    string value = Console.ReadLine();
+
+    do {
+        string value = Console.ReadLine();
+
+        if (Int32.TryParse(value, out var result))
+            if (result >= minimumValue)
+                return result;
+
+        Console.WriteLine("Value must be at least " + minimumValue);
+    } while(true);
     
-    int result;
-    if (Int32.TryParse(value,out result))
-        if (result >= minimumValue)
-            return result;
     
-    return 0;
 }
 string ReadString (string message, bool isRequired)
 {
     Console.WriteLine(message);
-    string value = Console.ReadLine();
+    do
+    {
+        string value = Console.ReadLine();
 
-    if (!isRequired)
-        return value;
+        if (!isRequired || value != "")
+            return value;
 
 
-    return value;
+        Console.WriteLine("Value is required!");
+    } while (true);
+   
 }
 
 /*
