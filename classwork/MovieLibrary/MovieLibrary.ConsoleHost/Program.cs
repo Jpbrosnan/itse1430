@@ -25,6 +25,25 @@ void getMovie ()
     //TODO: Fix length
     length = ReadInt("Enter the run length in minutes: ",0);
     releaseYear = ReadInt("Enter the release year:", 1900);
+
+    genre = ReadString("Enter the genre: ",false);
+    rating = ReadString("Enter the rating: ", false);
+    isBlackAndWhite = ReadBoolean("Black and White (Y/N): ");
+}
+
+bool ReadBoolean (string message)
+{
+    Console.WriteLine(message);
+
+    string value = Console.ReadLine();
+
+    if (value == "Y" || value == "y")
+        return true;
+    else if(value == "N" || value == "n")
+        return false;
+
+    //TODO: Handle errors
+    return false;
 }
 
 void DisplayMovie ()
@@ -32,6 +51,11 @@ void DisplayMovie ()
     Console.WriteLine(title);
     Console.WriteLine(description);
     Console.WriteLine(length);
+    Console.WriteLine(releaseYear);
+    Console.WriteLine(genre);
+    Console.WriteLine(rating);
+    Console.WriteLine(isBlackAndWhite);
+    
 }
 
 int ReadInt (string message, int minimumValue)
