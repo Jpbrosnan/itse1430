@@ -49,7 +49,7 @@ do
 } while (!done);
 
 
-
+//@ sign is verbatim string
 
 //Functions
 void AddMovie ()
@@ -71,9 +71,13 @@ void EditMovie()
 }
 void DeleteMovie ()
 {
-    if (!Confirm("Are you sure you want to delete the movie?(Y/N)"))
+    if (String.IsNullOrEmpty(title))
         return;
-    Console.WriteLine("Movie Deleted!");
+
+    if (!Confirm($"Are you sure you want to delete the movie '{title}' (Y/N)?"))
+        return;
+
+    title = "";
 }
 
 bool Confirm(string message)
@@ -142,12 +146,23 @@ int DisplayMenu ()
 
 void ViewMovie ()
 {
+    if (String.IsNullOrEmpty(title))
+    {
+        Console.WriteLine("No movies available!");
+        return;
+    };
+
+
+   //PREFERRED STRING FUNCTION: String interpolation
+    String message = $"Run Length: {length} mins";
+
+
 
     Console.WriteLine("\n------------------------");
     Console.WriteLine("\nThe title is " + title);
     Console.WriteLine("Description: " + description);
     Console.WriteLine("The movie length is " + length + " mins");
-    Console.WriteLine("The release year is " + releaseYear);
+    Console.WriteLine($"The release year is {releaseYear}");
     Console.WriteLine("The genre is " + genre);
     Console.WriteLine("The MPAA rating is " + rating);
 
