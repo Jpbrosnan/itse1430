@@ -96,7 +96,6 @@ int ChoosePath ()
 
 bool QuitConfirm ()
 {
-    
     while (true)
     {
         Console.WriteLine("Are you sure you want to quit?(Y/N)");
@@ -114,7 +113,6 @@ bool QuitConfirm ()
 
 bool ValidMove( int currentRoom, int direction )
 {
-
     switch (currentRoom)
     {
         case 1: return Room1(direction); 
@@ -298,6 +296,7 @@ void Story ( int lastRoom, int direction)
 void InvalidDirectionWarning ( int direction )
 {
     switch (room) {
+
         case 1: Room1Exits(direction, false); break;
 
         case 2: Room2Exits(direction, false); break;
