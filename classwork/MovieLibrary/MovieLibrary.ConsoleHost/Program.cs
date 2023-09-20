@@ -63,20 +63,26 @@ MenuCommand DisplayMenu ()
 Movie AddMovie ()
 {
     var movie = new Movie();
+    do
+    {
+        movie.title = ReadString("Enter a title: ", true);
+        movie.description = ReadString("Enter a description: ", false);
 
-    movie.title = ReadString("Enter a title: ", true);
-    movie.description = ReadString("Enter a description: ", false);
+        movie.length = ReadInt("Enter the run length (in mins): ", 0);
+        movie.releaseYear = ReadInt("Enter the release year: ", 1900);
 
-    movie.length = ReadInt("Enter the run length (in mins): ", 0);
-    movie.releaseYear = ReadInt("Enter the release year: ", 1900);
+        movie.genre = ReadString("Enter a genre: ", false);
+        movie.rating = ReadRating("Enter a rating: ");
 
-    movie.genre = ReadString("Enter a genre: ", false);
-    movie.rating = ReadRating("Enter a rating: ");
+        movie.isBlackAndWhite = ReadBoolean("Black and White (Y/N)?");
 
-    movie.isBlackAndWhite = ReadBoolean("Black and White (Y/N)?");
+        //Validate
+        var error = movie.Validate();
+        if (String.IsNullOrEmpty(error))
+            return movie;
 
-    ReadBoolean("Hello");
-    return movie;
+        Console.WriteLine($":Error {error}");
+    } while (true);
 }
 
 void EditMovie ()
@@ -106,7 +112,7 @@ void ViewMovie ( Movie movie )
         return;
     };
 
-    movie.DownloadMetadata();
+    //movie.DownloadMetadata();
 
     Console.WriteLine();
     Console.WriteLine("".PadLeft(15, '-'));
