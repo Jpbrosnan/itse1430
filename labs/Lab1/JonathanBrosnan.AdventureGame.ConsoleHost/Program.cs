@@ -15,37 +15,37 @@ using System.Runtime.CompilerServices;
 
 var previousRoom = 1;
 //Current Room
-var room = 1;
+var presentRoom = 1;
 DisplayIntro();
 var done = false;
 
 do
 {
-    ShowDirections();
-    previousRoom = room;
+    ShowMenuDirections();
+    previousRoom = presentRoom;
     switch (ChoosePath())
     {
         //1 = North, 2 = South, 3 = East, 4 = West
         //The corresponding 90s values are for when a user enters a direction that is not possible.
-        case 1: Story(previousRoom, 1); break;
+        case 1: DisplayRoomStory(previousRoom, 1); break;
 
-        case 91: InvalidDirectionWarning(1); break;
+        case 91: DisplayRoomExits(1); break;
 
-        case 2: Story(previousRoom, 2); break;
+        case 2: DisplayRoomStory(previousRoom, 2); break;
 
-        case 92: InvalidDirectionWarning(2); break;
+        case 92: DisplayRoomExits(2); break;
 
-        case 3: Story(previousRoom, 3); break;
+        case 3: DisplayRoomStory(previousRoom, 3); break;
 
-        case 93: InvalidDirectionWarning(3); break;
+        case 93: DisplayRoomExits(3); break;
 
-        case 4: Story(previousRoom, 4); break;
+        case 4: DisplayRoomStory(previousRoom, 4); break;
 
-        case 94: InvalidDirectionWarning(4); break;
+        case 94: DisplayRoomExits(4); break;
 
         case 0: done = true; break;
 
-        case 100: Console.WriteLine("Invalid input entered. Please try again."); break;
+        case 100: Console.WriteLine("Lets continue the adventure!");  break;
 
         case 102: Console.WriteLine("Invalid input entered. Your input must be one of the following: N, S, E, W, Q"); break;
     };
@@ -60,7 +60,7 @@ void DisplayIntro ()
     Console.WriteLine("sounds you are hearing. Which direction will you choose to go?");
 }
 
-void ShowDirections ()
+void ShowMenuDirections ()
 {
     Console.WriteLine("\n---------------\n");
     Console.WriteLine("N) Choose North");
@@ -78,13 +78,13 @@ int ChoosePath ()
     {   
         switch (Console.ReadKey(true).Key)
         {
-            case ConsoleKey.N: return (ValidMove(room, 1) ? 1 : 91);
+            case ConsoleKey.N: return (MoveFromRoom(presentRoom, 1) ? 1 : 91);
 
-            case ConsoleKey.S: return (ValidMove(room, 2) ? 2 : 92);
+            case ConsoleKey.S: return (MoveFromRoom(presentRoom, 2) ? 2 : 92);
 
-            case ConsoleKey.E: return (ValidMove(room, 3) ? 3 : 93);
+            case ConsoleKey.E: return (MoveFromRoom(presentRoom, 3) ? 3 : 93);
 
-            case ConsoleKey.W: return (ValidMove(room, 4) ? 4 : 94);
+            case ConsoleKey.W: return (MoveFromRoom(presentRoom, 4) ? 4 : 94);
 
             case ConsoleKey.Q: return (QuitConfirm() ? 0 : 100);
 
@@ -105,245 +105,246 @@ bool QuitConfirm ()
             case ConsoleKey.Y: return true;
 
             case ConsoleKey.N: return false;
+
         };
 
-        Console.WriteLine("\nInvalid input entered. Please try again.");
+        Console.WriteLine("\nInvalid input entered. Please enter Y or N.\n");
     };
 }
 
-bool ValidMove( int currentRoom, int direction )
+bool MoveFromRoom( int currentRoom, int direction )
 {
     switch (currentRoom)
     {
-        case 1: return Room1(direction); 
+        case 1: return MoveFromRoom1(direction); 
 
-        case 2: return Room2(direction);
+        case 2: return MoveFromRoom2(direction);
 
-        case 3: return Room3(direction);
+        case 3: return MoveFromRoom3(direction);
 
-        case 4: return Room4(direction);
+        case 4: return MoveFromRoom4(direction);
 
-        case 5: return Room5(direction);
+        case 5: return MoveFromRoom5(direction);
 
-        case 6: return Room6(direction);
+        case 6: return MoveFromRoom6(direction);
 
-        case 7: return Room7(direction);
+        case 7: return MoveFromRoom7(direction);
 
-        case 8: return Room8(direction);
+        case 8: return MoveFromRoom8(direction);
 
-        case 9: return Room9(direction);
+        case 9: return MoveFromRoom9(direction);
 
         default: return false;
 
     };
 }
 
-bool Room1 ( int direction)
+bool MoveFromRoom1 ( int direction)
 {   
     switch (direction)
     {
         //1 = North, 2 = South, 3 = East, 4 = West
-        case 2: room = 4; return true;
+        case 2: presentRoom = 4; return true;
 
-        case 3: room = 2; return true;
-
-        default: return false;
-    };
-}
-
-bool Room2 ( int direction )
-{
-    switch (direction)
-    {
-        //1 = North, 2 = South, 3 = East, 4 = West
-        case 2: room = 5; return true;
-
-        case 3: room = 3; return true;
-
-        case 4: room = 1; return true;
+        case 3: presentRoom = 2; return true;
 
         default: return false;
     };
 }
 
-bool Room3 ( int direction )
+bool MoveFromRoom2 ( int direction )
 {
     switch (direction)
     {
         //1 = North, 2 = South, 3 = East, 4 = West
-        case 2: room = 6; return true;
+        case 2: presentRoom = 5; return true;
 
-        case 4: room = 2; return true;
+        case 3: presentRoom = 3; return true;
+
+        case 4: presentRoom = 1; return true;
 
         default: return false;
     };
 }
 
-bool Room4 ( int direction )
+bool MoveFromRoom3 ( int direction )
 {
     switch (direction)
     {
         //1 = North, 2 = South, 3 = East, 4 = West
-        case 1: room = 1;  return true;
+        case 2: presentRoom = 6; return true;
 
-        case 2: room = 7; return true;
-
-        case 3: room = 5;  return true;
+        case 4: presentRoom = 2; return true;
 
         default: return false;
     };
 }
 
-bool Room5 ( int direction )
+bool MoveFromRoom4 ( int direction )
 {
     switch (direction)
     {
         //1 = North, 2 = South, 3 = East, 4 = West
-        case 1: room = 2; return true;
+        case 1: presentRoom = 1;  return true;
 
-        case 2: room = 8; return true;
+        case 2: presentRoom = 7; return true;
+
+        case 3: presentRoom = 5;  return true;
+
+        default: return false;
+    };
+}
+
+bool MoveFromRoom5 ( int direction )
+{
+    switch (direction)
+    {
+        //1 = North, 2 = South, 3 = East, 4 = West
+        case 1: presentRoom = 2; return true;
+
+        case 2: presentRoom = 8; return true;
           
-        case 3: room = 6; return true;
+        case 3: presentRoom = 6; return true;
 
-        case 4: room = 4; return true;
-
-        default: return false;
-    };
-}
-
-bool Room6 ( int direction )
-{
-    switch (direction)
-    {
-        //1 = North, 2 = South, 3 = East, 4 = West
-        case 1: room = 3; return true;
-
-        case 2: room = 9; return true;
-
-        case 4: room = 5; return true;
+        case 4: presentRoom = 4; return true;
 
         default: return false;
     };
 }
 
-bool Room7 ( int direction )
+bool MoveFromRoom6 ( int direction )
 {
     switch (direction)
     {
         //1 = North, 2 = South, 3 = East, 4 = West
-        case 1: room = 4; return true;
+        case 1: presentRoom = 3; return true;
 
-        case 3: room = 8; return true;
+        case 2: presentRoom = 9; return true;
+
+        case 4: presentRoom = 5; return true;
 
         default: return false;
     };
 }
 
-bool Room8 ( int direction )
+bool MoveFromRoom7 ( int direction )
 {
     switch (direction)
     {
         //1 = North, 2 = South, 3 = East, 4 = West
-        case 1: room = 5; return true;
+        case 1: presentRoom = 4; return true;
 
-        case 3: room = 9; return true;
+        case 3: presentRoom = 8; return true;
 
-        case 4: room = 7; return true;
+        default: return false;
+    };
+}
+
+bool MoveFromRoom8 ( int direction )
+{
+    switch (direction)
+    {
+        //1 = North, 2 = South, 3 = East, 4 = West
+        case 1: presentRoom = 5; return true;
+
+        case 3: presentRoom = 9; return true;
+
+        case 4: presentRoom = 7; return true;
         
         default: return false;
     };
 }
 
-bool Room9 ( int direction )
+bool MoveFromRoom9 ( int direction )
 {
     switch (direction)
     {
         //1 = North, 2 = South, 3 = East, 4 = West
-        case 1: room = 6; return true;
+        case 1: presentRoom = 6; return true;
 
-        case 4: room = 8; return true;
+        case 4: presentRoom = 8; return true;
 
         default: return false;
     };
 }
 
-void Story ( int lastRoom, int direction)
+void DisplayRoomStory ( int lastRoom, int direction)
 {
-    switch (room)
+    switch (presentRoom)
     {
-        case 1: Room1Story(lastRoom, direction); break;
+        case 1: DisplayRoom1Story(lastRoom, direction); break;
 
-        case 2: Room2Story(lastRoom, direction); break;
+        case 2: DisplayRoom2Story(lastRoom, direction); break;
 
-        case 3: Room3Story(lastRoom, direction); break;
+        case 3: DisplayRoom3Story(lastRoom, direction); break;
 
-        case 4: Room4Story(lastRoom, direction); break;
+        case 4: DisplayRoom4Story(lastRoom, direction); break;
 
-        case 5: Room5Story(lastRoom, direction); break;
+        case 5: DisplayRoom5Story(lastRoom, direction); break;
 
-        case 6: Room6Story(lastRoom, direction); break;
+        case 6: DisplayRoom6Story(lastRoom, direction); break;
 
-        case 7: Room7Story(lastRoom, direction); break;
+        case 7: DisplayRoom7Story(lastRoom, direction); break;
 
-        case 8: Room8Story(lastRoom, direction); break;
+        case 8: DisplayRoom8Story(lastRoom, direction); break;
 
-        case 9: Room9Story(lastRoom, direction); break;
+        case 9: DisplayRoom9Story(lastRoom, direction); break;
 
         default: Console.WriteLine("Invalid room number."); break;
 
     };
 }
-void InvalidDirectionWarning ( int direction )
+void DisplayRoomExits ( int direction )
 {
-    switch (room) {
+    switch (presentRoom) {
 
-        case 1: Room1Exits(direction, false); break;
+        case 1: DisplayRoom1Exits(direction, false); break;
 
-        case 2: Room2Exits(direction, false); break;
+        case 2: DisplayRoom2Exits(direction, false); break;
 
-        case 3: Room3Exits(direction, false); break;
+        case 3: DisplayRoom3Exits(direction, false); break;
 
-        case 4: Room4Exits(direction, false); break;
+        case 4: DisplayRoom4Exits(direction, false); break;
 
-        case 5: Room5Exits(direction, false); break;
+        case 5: DisplayRoom5Exits(direction, false); break;
 
-        case 6: Room6Exits(direction, false); break;
+        case 6: DisplayRoom6Exits(direction, false); break;
 
-        case 7: Room7Exits(direction, false); break;
+        case 7: DisplayRoom7Exits(direction, false); break;
 
-        case 8: Room8Exits(direction, false); break;
+        case 8: DisplayRoom8Exits(direction, false); break;
 
-        case 9: Room9Exits(direction, false); break;
+        case 9: DisplayRoom9Exits(direction, false); break;
 
         default: Console.WriteLine("Invalid room number."); break;
     };
 }
 
-void Room1Story ( int lastRoom, int direction )
+void DisplayRoom1Story ( int lastRoom, int direction )
 {
-    Console.WriteLine($"You head {directionNumberConverter(direction)} from room#{lastRoom} towards room#{room}.");
-    randomEncounter();
+    Console.WriteLine($"You head {ConvertDirectionIntegerToString(direction)} from room#{lastRoom} towards room#{presentRoom}.");
+    DisplayRandomEncounter();
 
     Console.WriteLine("You enter the room and immediately realize that you've come all the way back to the original");
     Console.WriteLine("room you woke up in. You see signs of other victims that have passed through the room since");
     Console.WriteLine("you’ve started this horrible journey. Dread overcomes you when you realize that you will");
     Console.WriteLine("probably never leave this cursed place. What direction do you choose this time?");
 
-    Room1Map();
-    Room1Exits(direction, true);
+    DisplayRoom1Map();
+    DisplayRoom1Exits(direction, true);
 }
 
-void Room1Exits ( int direction, bool invalid )
+void DisplayRoom1Exits ( int direction, bool invalid )
 {
     if (!invalid)
-        Console.WriteLine($"You are unable to walk {directionNumberConverter(direction)} from this room.");
+        Console.WriteLine($"You are unable to walk {ConvertDirectionIntegerToString(direction)} from this room.");
 
     Console.WriteLine("Your available directions to exit from this room are south and east.");
 }
-void Room2Story ( int lastRoom, int direction )
+void DisplayRoom2Story ( int lastRoom, int direction )
 {
-    Console.WriteLine($"You head {directionNumberConverter(direction)} from room#{lastRoom} towards room#{room}.");
-    randomEncounter();
+    Console.WriteLine($"You head {ConvertDirectionIntegerToString(direction)} from room#{lastRoom} towards room#{presentRoom}.");
+    DisplayRandomEncounter();
 
     Console.WriteLine("The room consists of just 1 single bed. As you walked past the bed towards the other door,");
     Console.WriteLine("something crawled from underneath the bed. The creature was taller than a lamppost and");
@@ -352,21 +353,21 @@ void Room2Story ( int lastRoom, int direction )
     Console.WriteLine("membrane for an eye. You launch yourself away from the beast. Which direction do you flee");
     Console.WriteLine("toward?");
 
-    Room2Map();
-    Room2Exits(direction, true);
+    DisplayRoom2Map();
+    DisplayRoom2Exits(direction, true);
 }
 
-void Room2Exits ( int direction, bool invalid )
+void DisplayRoom2Exits ( int direction, bool invalid )
 {
     if (!invalid)
-        Console.WriteLine($"You are unable to walk {directionNumberConverter(direction)} from this room.");
+        Console.WriteLine($"You are unable to walk {ConvertDirectionIntegerToString(direction)} from this room.");
 
     Console.WriteLine("Your available directions to exit from this room are south, west and east.");
 }
-void Room3Story ( int lastRoom, int direction )
+void DisplayRoom3Story ( int lastRoom, int direction )
 {
-    Console.WriteLine($"You head {directionNumberConverter(direction)} from room#{lastRoom} towards room#{room}.");
-    randomEncounter();
+    Console.WriteLine($"You head {ConvertDirectionIntegerToString(direction)} from room#{lastRoom} towards room#{presentRoom}.");
+    DisplayRandomEncounter();
 
     Console.WriteLine("What greeted you when you entered the room shocked you to your core. The creature was");
     Console.WriteLine("unnatural and broken, slithered on the ground like a worm. Its fiendish frame was broken and");
@@ -376,21 +377,21 @@ void Room3Story ( int lastRoom, int direction )
     Console.WriteLine("had a single blistery white orb for an eye.");
 
 
-    Room3Map();
-    Room3Exits(direction, true);
+    DisplayRoom3Map();
+    DisplayRoom3Exits(direction, true);
 }
 
-void Room3Exits ( int direction, bool invalid )
+void DisplayRoom3Exits ( int direction, bool invalid )
 {
     if (!invalid)
-        Console.WriteLine($"You are unable to walk {directionNumberConverter(direction)} from this room.");
+        Console.WriteLine($"You are unable to walk {ConvertDirectionIntegerToString(direction)} from this room.");
 
     Console.WriteLine("Your available directions to exit from this room are south and west.");
 }
-void Room4Story ( int lastRoom, int direction )
+void DisplayRoom4Story ( int lastRoom, int direction )
 {
-    Console.WriteLine($"You head {directionNumberConverter(direction)} from room#{lastRoom} towards room#{room}.");
-    randomEncounter();
+    Console.WriteLine($"You head {ConvertDirectionIntegerToString(direction)} from room#{lastRoom} towards room#{presentRoom}.");
+    DisplayRandomEncounter();
 
     Console.WriteLine("As you entered the room to find a horrible monster crawling on the ceiling. The monster was half");
     Console.WriteLine("as tall as a man and moved crouched and close to the ground. Its grotesque anatomy was");
@@ -399,20 +400,20 @@ void Room4Story ( int lastRoom, int direction )
     Console.WriteLine("face was as dark as a shadow. Its mouth had teeth like broken glass. Its eyes were 2 bug-like");
     Console.WriteLine("teal slits. What direction should you run towards?");
 
-    Room4Map();
-    Room4Exits(direction, true);
+    DisplayRoom4Map();
+    DisplayRoom4Exits(direction, true);
 }
-void Room4Exits ( int direction, bool invalid )
+void DisplayRoom4Exits ( int direction, bool invalid )
 {
     if (!invalid)
-        Console.WriteLine($"You are unable to walk {directionNumberConverter(direction)} from this room.");
+        Console.WriteLine($"You are unable to walk {ConvertDirectionIntegerToString(direction)} from this room.");
 
     Console.WriteLine("Your available directions to exit from this room are north, south and east.");
 }
-void Room5Story ( int lastRoom, int direction )
+void DisplayRoom5Story ( int lastRoom, int direction )
 {
-    Console.WriteLine($"You head {directionNumberConverter(direction)} from room#{lastRoom} towards room#{room}.");
-    randomEncounter();
+    Console.WriteLine($"You head {ConvertDirectionIntegerToString(direction)} from room#{lastRoom} towards room#{presentRoom}.");
+    DisplayRandomEncounter();
 
     Console.WriteLine("You enter the room to find your late mother standing before you. Something was disturbingly off");
     Console.WriteLine("about her even though, physically, she was identical. It was like the entity was wearing your");
@@ -421,20 +422,20 @@ void Room5Story ( int lastRoom, int direction )
     Console.WriteLine("you, the louder her voice got. You decided that you didn't want to find out what would happen");
     Console.WriteLine("when she finally reached you. Which direction do you scurry too?");
 
-    Room5Map();
-    Room5Exits(direction, true);
+    DisplayRoom5Map();
+    DisplayRoom5Exits(direction, true);
 }
-void Room5Exits ( int direction, bool invalid )
+void DisplayRoom5Exits ( int direction, bool invalid )
 {
     if (!invalid)
-        Console.WriteLine($"You are unable to walk {directionNumberConverter(direction)} from this room.");
+        Console.WriteLine($"You are unable to walk {ConvertDirectionIntegerToString(direction)} from this room.");
 
     Console.WriteLine("You can move in any direction from this room.");
 }
-void Room6Story ( int lastRoom, int direction )
+void DisplayRoom6Story ( int lastRoom, int direction )
 {
-    Console.WriteLine($"You head {directionNumberConverter(direction)} from room#{lastRoom} towards room#{room}.");
-    randomEncounter();
+    Console.WriteLine($"You head {ConvertDirectionIntegerToString(direction)} from room#{lastRoom} towards room#{presentRoom}.");
+    DisplayRandomEncounter();
 
     Console.WriteLine("As expected, an unholy being stalked towards you as soon as you entered the room. The");
     Console.WriteLine("creature was small enough to fit in a barrel and stood upright on two legs. Its hellish frame was");
@@ -443,20 +444,20 @@ void Room6Story ( int lastRoom, int direction )
     Console.WriteLine("head. Its mouth was filled with glowing teeth. Its eyes were 2 ooze secreting dark green orbs. If");
     Console.WriteLine("you make it past alive, what direction do you escape toward?");
 
-    Room6Map();
-    Room6Exits(direction, true);
+    DisplayRoom6Map();
+    DisplayRoom6Exits(direction, true);
 }
-void Room6Exits ( int direction, bool invalid )
+void DisplayRoom6Exits ( int direction, bool invalid )
 {
     if (!invalid)
-        Console.WriteLine($"You are unable to walk {directionNumberConverter(direction)} from this room.");
+        Console.WriteLine($"You are unable to walk {ConvertDirectionIntegerToString(direction)} from this room.");
 
     Console.WriteLine("Your available directions to exit from this room are north, south and west from this room.");
 }
-void Room7Story ( int lastRoom, int direction )
+void DisplayRoom7Story ( int lastRoom, int direction )
 {
-    Console.WriteLine($"You head {directionNumberConverter(direction)} from room#{lastRoom} towards room#{room}.");
-    randomEncounter();
+    Console.WriteLine($"You head {ConvertDirectionIntegerToString(direction)} from room#{lastRoom} towards room#{presentRoom}.");
+    DisplayRandomEncounter();
 
     Console.WriteLine("This time when entering the room instead of being across the room, the creature appeared 1");
     Console.WriteLine("inch in front of you. The creature standing in front of you was something out of a fantasy horror");
@@ -466,20 +467,20 @@ void Room7Story ( int lastRoom, int direction )
     Console.WriteLine("protrusions. Its body was corpse-like and clung together with loose skin. Its mouth was bursting");
     Console.WriteLine("with teeth.");
 
-    Room7Map();
-    Room7Exits(direction, true);
+    DisplayRoom7Map();
+    DisplayRoom7Exits(direction, true);
 }
-void Room7Exits ( int direction, bool invalid )
+void DisplayRoom7Exits ( int direction, bool invalid )
 {
     if (!invalid)
-        Console.WriteLine($"You are unable to walk {directionNumberConverter(direction)} from this room.");
+        Console.WriteLine($"You are unable to walk {ConvertDirectionIntegerToString(direction)} from this room.");
 
     Console.WriteLine("Your available directions to exit from this room are north and east from this room.");
 }
-void Room8Story ( int lastRoom, int direction )
+void DisplayRoom8Story ( int lastRoom, int direction )
 {
-    Console.WriteLine($"You head {directionNumberConverter(direction)} from room#{lastRoom} towards room#{room}.");
-    randomEncounter();
+    Console.WriteLine($"You head {ConvertDirectionIntegerToString(direction)} from room#{lastRoom} towards room#{presentRoom}.");
+    DisplayRandomEncounter();
 
     Console.WriteLine("You hurry into the room to find an identical version of you staring at you smiling wide like a");
     Console.WriteLine("demon. As you cautiously move toward another exit, your devilish doppelganger mirrors your");
@@ -487,36 +488,36 @@ void Room8Story ( int lastRoom, int direction )
     Console.WriteLine("movement is trapping you in this room. Immediately, you knew what had to be done. It had to be");
     Console.WriteLine("knocked out, or worse, killed.. What direction will you run towards after your violent struggle?");
 
-    Room8Map();
-    Room8Exits(direction, true);
+    DisplayRoom8Map();
+    DisplayRoom8Exits(direction, true);
 }
-void Room8Exits ( int direction, bool invalid )
+void DisplayRoom8Exits ( int direction, bool invalid )
 {
     if (!invalid)
-        Console.WriteLine($"You are unable to walk {directionNumberConverter(direction)} from this room.");
+        Console.WriteLine($"You are unable to walk {ConvertDirectionIntegerToString(direction)} from this room.");
 
     Console.WriteLine("Your available directions to exit from this room are west, north and east from this room.");
 }
-void Room9Story ( int lastRoom, int direction )
+void DisplayRoom9Story ( int lastRoom, int direction )
 {
-    Console.WriteLine($"You head {directionNumberConverter(direction)} from room#{lastRoom} towards room#{room}.");
-    randomEncounter();
+    Console.WriteLine($"You head {ConvertDirectionIntegerToString(direction)} from room#{lastRoom} towards room#{presentRoom}.");
+    DisplayRandomEncounter();
 
     Console.WriteLine("You enter the room to find yourself in the most crowded DMV waiting room you’ve ever seen. It");
     Console.WriteLine("is so crowded, you can barely breathe. After hours of grueling, claustrophobic micromovements,");
     Console.WriteLine("you reach a door that will free you from this hell. What direction did you decide to go?");
 
-    Room9Map();
-    Room9Exits(direction, true);
+    DisplayRoom9Map();
+    DisplayRoom9Exits(direction, true);
 }
-void Room9Exits ( int direction, bool invalid )
+void DisplayRoom9Exits ( int direction, bool invalid )
 {
     if (!invalid)
-        Console.WriteLine($"You are unable to travel {directionNumberConverter(direction)} from this room.");
+        Console.WriteLine($"You are unable to travel {ConvertDirectionIntegerToString(direction)} from this room.");
 
     Console.WriteLine("Your available directions to exit from this room are north and west from this room.");
 }
-string directionNumberConverter (int direction)
+string ConvertDirectionIntegerToString (int direction)
 {
     switch (direction)
     {
@@ -532,7 +533,7 @@ string directionNumberConverter (int direction)
     };
 }
 
-void randomEncounter ()
+void DisplayRandomEncounter ()
 {
     if (GeneratePercentage() < 5)
     {
@@ -547,7 +548,7 @@ int GeneratePercentage ()
     return Random.Shared.Next(1, 101);
 }
 
-void Room1Map ()
+void DisplayRoom1Map ()
 {
     Console.WriteLine();
     Console.WriteLine("X is where you are currently located.");
@@ -557,7 +558,7 @@ void Room1Map ()
     Console.WriteLine(" 7 8 9");
     Console.WriteLine();
 }
-void Room2Map ()
+void DisplayRoom2Map ()
 {
     Console.WriteLine();
     Console.WriteLine("X is where you are currently located.");
@@ -568,7 +569,7 @@ void Room2Map ()
     Console.WriteLine();
 }
 
-void Room3Map ()
+void DisplayRoom3Map ()
 {
     Console.WriteLine();
     Console.WriteLine("X is where you are currently located.");
@@ -578,7 +579,7 @@ void Room3Map ()
     Console.WriteLine(" 7 8 9");
     Console.WriteLine();
 }
-void Room4Map ()
+void DisplayRoom4Map ()
 {
     Console.WriteLine();
     Console.WriteLine("X is where you are currently located.");
@@ -588,7 +589,7 @@ void Room4Map ()
     Console.WriteLine(" 7 8 9");
     Console.WriteLine();
 }
-void Room5Map ()
+void DisplayRoom5Map ()
 {
     Console.WriteLine();
     Console.WriteLine("X is where you are currently located.");
@@ -598,7 +599,7 @@ void Room5Map ()
     Console.WriteLine(" 7 8 9");
     Console.WriteLine();
 }
-void Room6Map ()
+void DisplayRoom6Map ()
 {
     Console.WriteLine();
     Console.WriteLine("X is where you are currently located.");
@@ -608,7 +609,7 @@ void Room6Map ()
     Console.WriteLine(" 7 8 9");
     Console.WriteLine();
 }
-void Room7Map ()
+void DisplayRoom7Map ()
 {
     Console.WriteLine();
     Console.WriteLine("X is where you are currently located.");
@@ -618,7 +619,7 @@ void Room7Map ()
     Console.WriteLine(" X 8 9");
     Console.WriteLine();
 }
-void Room8Map ()
+void DisplayRoom8Map ()
 {
     Console.WriteLine();
     Console.WriteLine("X is where you are currently located.");
@@ -629,7 +630,7 @@ void Room8Map ()
     Console.WriteLine();
 }
 
-void Room9Map ()
+void DisplayRoom9Map ()
 {
     Console.WriteLine();
     Console.WriteLine("X is where you are currently located.");
