@@ -84,7 +84,7 @@ partial class Program
             movie.Title = ReadString("Enter a title: ", true);
             movie.Description = ReadString("Enter a description: ", false);
 
-            movie.Length = ReadInt("Enter the run length (in mins): ", 0);
+            movie.RunLength = ReadInt("Enter the run length (in mins): ", 0);
             movie.ReleaseYear = ReadInt("Enter the release year: ", 1900);
 
             movie.Genre = ReadString("Enter a genre: ", false);
@@ -135,8 +135,10 @@ partial class Program
 
         Console.WriteLine(movie.Title);
 
-        string message = $"Run Length: {movie.Length} mins";
+        string message = $"Run Length: {movie.RunLength} mins";
         Console.WriteLine(message);
+        if (movie.NeedsIntermission)
+            Console.WriteLine("Includes Intermission");
 
         Console.WriteLine($"Released {movie.ReleaseYear}");
         Console.WriteLine(movie.Genre);

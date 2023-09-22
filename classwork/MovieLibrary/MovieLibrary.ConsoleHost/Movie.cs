@@ -12,75 +12,90 @@ namespace MovieLibrary
     {
         //Fields - data
         /// <summary>Title of movie.</summary>
-        private string title = "";
-        private string description = "";
-        private string genre = "";
-        private string rating = "";
+        private string _title;
+        private string _description;
+        private string _genre;
+        private string _rating;
 
-        private int length;
-        private int releaseYear = 1900;
-        private bool isBlackAndWhite;
+        //private int _length;
+        //private int _releaseYear = 1900;
+        //private bool _isBlackAndWhite;
+        
+        //Calculated Property
+        public bool NeedsIntermission
+        {
+            get { return RunLength >= 150; }
+            //set { }
+        }
 
         //Properties - data with functionality
 
         public string Title
         {
-            get { return title; }
+            get { 
+                if(String.IsNullOrEmpty(_title))
+                    return "";
+
+                return _title;
+            }
             set {
-                title = value;
+                if(value != null)
+                    value = value.Trim();
+                _title = value;
             }
         }
         public string Description
         {
-            get { return description; }
+            get {
+                if (String.IsNullOrEmpty(_description))
+                    return "";
+
+                return _description; 
+            }
             set {
-                description=value;
+                if (value != null)
+                    value = value.Trim();
+                _description=value;
             }
         }
         public string Genre
         {
             get {
-                return genre;
+                if (String.IsNullOrEmpty(_genre))
+                    return "";
+
+                return _genre;
             }
             set {
-                genre=value;
+                if (value != null)
+                    value = value.Trim();
+                _genre=value;
             }
         }
         public string Rating
         {
             get {
-                return rating;
+                if (String.IsNullOrEmpty(_rating))
+                    return "";
+                
+                return _rating;
             }
             set {
-                rating=value;
+                if (value != null)
+                    value = value.Trim();
+                _rating=value;
             }
         }
-        public int Length
+        public int ReleaseYear { get; set; } = 1900;
+        public int RunLength
         {
-            get {
-                return length;
-            }
-            set {
-                length=value;
-            }
-        }
-        public int ReleaseYear
-        {
-            get {
-                return releaseYear;
-            }
-            set {
-                releaseYear=value;
-            }
+            get;
+            set;
         }
         public bool IsBlackAndWhite
         {
-            get {
-                return isBlackAndWhite;
-            }
-            set {
-                isBlackAndWhite=value;
-            }
+            get;
+            set;
         }
 
         //Methods - functionality
@@ -98,7 +113,7 @@ namespace MovieLibrary
         {
             //Title is required
             //if (String.IsNullOrEmpty(this.title))
-            if (String.IsNullOrEmpty(title))
+            if (String.IsNullOrEmpty(_title))
                 return "Title is required";
 
             //var releaseYear = 10;
@@ -109,7 +124,7 @@ namespace MovieLibrary
                 return "Release Year must be >= 1900";
 
             //Length >= 0
-            if (Length < 0)
+            if (RunLength < 0)
                 return "Length must be at least 0";
 
             //TODO: Rating is in a list
