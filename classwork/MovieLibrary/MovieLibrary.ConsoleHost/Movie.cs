@@ -21,6 +21,12 @@ namespace MovieLibrary
         //private int _releaseYear = 1900;
         //private bool _isBlackAndWhite;
         
+        /// <summary>
+        /// Gets or sets the unique indentifier of the movie.
+        /// </summary>
+        public int Id { get; private set; }
+
+        public const int MinimumReleaseYear = 1900;
         //Calculated Property
         public bool NeedsIntermission
         {
@@ -86,7 +92,7 @@ namespace MovieLibrary
                 _rating=value;
             }
         }
-        public int ReleaseYear { get; set; } = 1900;
+        public int ReleaseYear { get; set; } = MinimumReleaseYear;
         public int RunLength
         {
             get;
@@ -120,8 +126,8 @@ namespace MovieLibrary
 
             //Release Year >= 1900
             //if (this.releaseYear < 1900)
-            if (ReleaseYear < 1900)
-                return "Release Year must be >= 1900";
+            if (ReleaseYear < MinimumReleaseYear)
+                return $"Release Year must be >= {MinimumReleaseYear}";
 
             //Length >= 0
             if (RunLength < 0)

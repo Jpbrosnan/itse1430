@@ -85,7 +85,7 @@ partial class Program
             movie.Description = ReadString("Enter a description: ", false);
 
             movie.RunLength = ReadInt("Enter the run length (in mins): ", 0);
-            movie.ReleaseYear = ReadInt("Enter the release year: ", 1900);
+            movie.ReleaseYear = ReadInt("Enter the release year: ", Movie.MinimumReleaseYear);
 
             movie.Genre = ReadString("Enter a genre: ", false);
             movie.Rating = ReadRating("Enter a rating: ");
