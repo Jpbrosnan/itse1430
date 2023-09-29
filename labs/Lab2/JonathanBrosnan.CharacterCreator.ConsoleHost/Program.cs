@@ -16,17 +16,19 @@ partial class Program
         app.Run();
     }
 
-    
+    /// <summary>
+    /// Runs the character creator.
+    /// </summary>
     void Run ()
     {
         //add, delete, view, edit
         Character player = new Character();
         var done = false;
-       
         do
         {
-            ShowMenuDirections();
-            switch (ChoosePath())
+            DisplayMenu();
+
+            switch (GetMenuInput())
             {
                 //add, delete, view, edit
                 //The corresponding 90s values are for when a user enters a direction that is not possible.
@@ -42,15 +44,17 @@ partial class Program
 
                 case 100: Display("Lets continue the character creator!", 2); break;
 
-                case 102: Display("Invalid input entered. Your input must be one of the following: A, V, E, D, Q", 3); break;
+                case 102: Display("ERROR: Invalid input entered. Your input must be one of the following: A, V, E, D, Q", 3); break;
             };
 
         } while (!done);
     }
+    
     /// <summary>
-    /// 
+    /// Displays main menu.
     /// </summary>
-    void ShowMenuDirections ()
+    /// <remarks>The user is shown the menu options and the corresponding input option. </remarks>
+    void DisplayMenu ()
     {
         Console.WriteLine("\n---------------\n");
         Console.WriteLine("A) Add New Character");
@@ -61,7 +65,11 @@ partial class Program
         Console.WriteLine("\n---------------\n");
     }
 
-    int ChoosePath ()
+    /// <summary>
+    /// Handles the main menu input.
+    /// </summary>
+    /// <returns>The number that corresponding to the menu item selected.</returns>
+    int GetMenuInput ()
     {
         do
         {
@@ -85,7 +93,10 @@ partial class Program
 
 
     
-
+    /// <summary>
+    /// Creates a new character from user input.
+    /// </summary>
+    /// <returns>The created character.</returns>
     Character AddCharacter ()
     {
         //var character = new Character(ReadString("Enter the character's name: ", true), ReadProfession(), ReadRace(), ReadString("Enter the character's biography", false));
@@ -93,16 +104,16 @@ partial class Program
         {
             var character = new Character();
             character.Name = ReadString("Enter the character's name: ", true);
-            character.Profession = ReadProfession();
-            character.Race = ReadRace();
+            character.Profession = HandleProfessionInput();
+            character.Race = HandleRaceInput();
             character.Biography = ReadString("\nEnter the character's biography(Optional): ", false);
 
 
-            character.Strength = ReadAttribute("strength", character.MinimumAttributeValue, character.MaximumAttributeValue);
-            character.Intelligence = ReadAttribute("intelligence", character.MinimumAttributeValue, character.MaximumAttributeValue);
-            character.Agility = ReadAttribute("agility", character.MinimumAttributeValue, character.MaximumAttributeValue);
-            character.Constitution = ReadAttribute("constitution", character.MinimumAttributeValue, character.MaximumAttributeValue);
-            character.Charisma = ReadAttribute("charisma", character.MinimumAttributeValue, character.MaximumAttributeValue);
+            character.Strength = HandleAttributeInput("strength", character.MinimumAttributeValue, character.MaximumAttributeValue);
+            character.Intelligence = HandleAttributeInput("intelligence", character.MinimumAttributeValue, character.MaximumAttributeValue);
+            character.Agility = HandleAttributeInput("agility", character.MinimumAttributeValue, character.MaximumAttributeValue);
+            character.Constitution = HandleAttributeInput("constitution", character.MinimumAttributeValue, character.MaximumAttributeValue);
+            character.Charisma = HandleAttributeInput("charisma", character.MinimumAttributeValue, character.MaximumAttributeValue);
 
 
             var error = character.Validate();
@@ -114,8 +125,83 @@ partial class Program
         
         
     }
+    /// <summary>
+    /// Views existing character stats.
+    /// </summary>
+    /// <param name="character">The Character that is being viewed.</param>
+    void ViewCharacter ( Character character )
+    {
+        if (String.IsNullOrEmpty(character.Name))
+        {
+            Display("ERROR: No character available.", 3);
+            return;
+        }
 
-    string ReadProfession()
+        DisplayStats(character, true);
+
+    }
+    /// <summary>
+    /// Edits an existing character.
+    /// </summary>
+    /// <param name="character">Character that is to be edited.</param>
+    /// <returns>The edited character.</returns>
+    Character EditCharacter ( Character character )
+    {
+        if (String.IsNullOrEmpty(character.Name))
+        {
+            Display("Creating new character because there is no existing character.", 2);
+            return AddCharacter();
+        }
+
+        return HandlesEditInputs(character);
+
+    }
+
+    /// <summary>
+    /// Deletes a character.
+    /// </summary>
+    /// <param name="character">The character that is being deleted.</param>
+    void DeleteCharacter ( Character character )
+    {
+        if (String.IsNullOrEmpty(character.Name))
+        {
+            Display("ERROR: No character to delete.", 3);
+        } else if (Confirm("Are you sure you want to delete the character? (Y/N)"))
+        {
+            character.Name =  "";
+            Display("Character deleted.", 2);
+
+        } else
+        {
+            Display("Character not deleted.", 2);
+        }
+    }
+
+    /// <summary>
+    /// Reads a string.
+    /// </summary>
+    /// <param name="message">The message to display.</param>
+    /// <param name="isRequired">false to allow empty string otherwise a value must be inputed.</param>
+    /// <returns></returns>
+    string ReadString ( string message, bool isRequired )
+    {
+        Display(message, 1);
+        do
+        {
+            string value = Console.ReadLine().Trim();
+
+            if (!isRequired || !String.IsNullOrEmpty(value))
+                return value;
+
+            Display("ERROR: Value is required", 3);
+        } while (true);
+    }
+
+    /// <summary>
+    /// Handles the profession selection input.
+    /// </summary>
+    /// <returns>The selected profession string. </returns>
+    string HandleProfessionInput()
     {
         
         DisplayProfessions();
@@ -141,17 +227,12 @@ partial class Program
     }
 
 
-    void DisplayProfessions ()
-    {
-        Display("\nPick one of the following professions for the character: ", 1);
-        Console.WriteLine("F) Fighter");
-        Console.WriteLine("H) Hunter");
-        Console.WriteLine("P) Priest");
-        Console.WriteLine("R) Rogue");
-        Console.WriteLine("W) Wizard");
-    }
-
-    string ReadRace ()
+    
+    /// <summary>
+    /// Handles the race selection input.
+    /// </summary>
+    /// <returns>The selected race string</returns>
+    string HandleRaceInput ()
     {
         DisplayRaces();
         do
@@ -168,56 +249,18 @@ partial class Program
 
                 case ConsoleKey.H: Display("Race selected: Human", 2); return "Human";
 
-                //default: Console.WriteLine("Options are D) Dwarf, E) Elf, G) Gnome, F) Half Elf, H) Human"); continue;
-
             };
             Display("ERROR: Options are D) Dwarf, E) Elf, G) Gnome, F) Half Elf, H) Human", 3);
         } while (true);
     }
-
-    void DisplayRaces ()
-    {
-        
-        Display("\nPick one of the following races for the character:", 1);
-        Console.WriteLine("D) Dwarf");
-        Console.WriteLine("E) Elf");
-        Console.WriteLine("G) Gnome");
-        Console.WriteLine("F) Half Elf");
-        Console.WriteLine("H) Human");
-        
-    }
-
-    string ReadString ( string message, bool isRequired )
-    {
-        Display(message, 1);
-
-        do
-        {
-            string value = Console.ReadLine().Trim();
-
-            if (!isRequired || !String.IsNullOrEmpty(value))
-                return value;
-
-            Display("ERROR: Value is required", 3);
-        } while (true);
-    }
-
-    void Display (string message, int type)
-    {
-        //1 = Asking, 2 = Confirmation, 3 = Error
-        switch (type)
-        {
-            case 1: Console.ForegroundColor = ConsoleColor.Green; break;
-            case 2: Console.ForegroundColor = ConsoleColor.Cyan; break;
-            case 3: Console.ForegroundColor = ConsoleColor.Red; break;
-            case 4: Console.ForegroundColor = ConsoleColor.Yellow; break;
-        }
-        Console.WriteLine(message);
-        Console.ResetColor();
-
-    }
-    
-    int ReadAttribute ( string message, int minimumValue, int maximumValue )
+    /// <summary>
+    /// Reads the attribute value.
+    /// </summary>
+    /// <param name="message">The attribute that is being asked about.</param>
+    /// <param name="minimumValue">The minimum value that the attribute value can be.</param>
+    /// <param name="maximumValue">The maximum value that the attribute value can be.</param>
+    /// <returns>The attribute value.</returns>
+    int HandleAttributeInput ( string message, int minimumValue, int maximumValue )
     {
         do
         {
@@ -232,56 +275,50 @@ partial class Program
             Display($"ERROR: Value must be at least {minimumValue} and at most {maximumValue}.", 3);
         } while (true);
     }
-
-    bool Confirm( string message )
+    /// <summary>
+    /// Displays the professions menu.
+    /// </summary>
+    void DisplayProfessions ()
     {
-        Display(message,1);
-
-        //Handle errors
-        while (true)
-        {
-         
-            switch (Console.ReadKey(true).Key)
-            {
-                
-                case ConsoleKey.Y: return true;
-
-                case ConsoleKey.N: return false;
-                         
-            };
-
-            Display("\nERROR: Invalid input entered. Please enter Y or N.\n", 3);
-
-        };
+        Display("\nPick one of the following professions for the character: ", 1);
+        Console.WriteLine("F) Fighter");
+        Console.WriteLine("H) Hunter");
+        Console.WriteLine("P) Priest");
+        Console.WriteLine("R) Rogue");
+        Console.WriteLine("W) Wizard");
     }
+    /// <summary>
+    /// Displays the races menu.
+    /// </summary>
+    void DisplayRaces ()
+    {
+        
+        Display("\nPick one of the following races for the character:", 1);
+        Console.WriteLine("D) Dwarf");
+        Console.WriteLine("E) Elf");
+        Console.WriteLine("G) Gnome");
+        Console.WriteLine("F) Half Elf");
+        Console.WriteLine("H) Human");
+        
+    }
+
+   
+
     
-    void ViewCharacter(Character character )
+    
+    
+
+   
+    
+    
+    /// <summary>
+    /// Handles the character edit inputs.
+    /// </summary>
+    /// <param name="character">The character that is to be edited.</param>
+    /// <returns>The character that has been edited.</returns>
+    Character HandlesEditInputs(Character character )
     {
-        if (String.IsNullOrEmpty(character.Name))
-        {
-            Display("ERROR: No character available.", 3);
-            return;
-        }
-
-        DisplayStats(character, true);
-
-    }
-
-    Character EditCharacter( Character character )
-    {
-        if (String.IsNullOrEmpty(character.Name))
-        {
-            Display("Creating new character because there is no existing character.", 2);
-            return AddCharacter();
-        }
-
-        return DisplayEditMenu(character);
-
-    }
-
-    Character DisplayEditMenu(Character character )
-    {
-        //var editedCharacter = character;
+        
         do
         {
             DisplayStats(character, false);
@@ -289,21 +326,21 @@ partial class Program
             {
                 case ConsoleKey.N: character.Name = ReadString("Enter the character's name: ", true); break;
 
-                case ConsoleKey.P: character.Profession = ReadProfession(); break;
+                case ConsoleKey.P: character.Profession = HandleProfessionInput(); break;
 
-                case ConsoleKey.R: character.Race = ReadRace(); break;
+                case ConsoleKey.R: character.Race = HandleRaceInput(); break;
 
                 case ConsoleKey.B: character.Biography = ReadString("Enter the character's biography(Optional): ", false); break;
 
-                case ConsoleKey.S: character.Strength = ReadAttribute("strength", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
+                case ConsoleKey.S: character.Strength = HandleAttributeInput("strength", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
 
-                case ConsoleKey.I: character.Intelligence = ReadAttribute("intelligence", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
+                case ConsoleKey.I: character.Intelligence = HandleAttributeInput("intelligence", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
 
-                case ConsoleKey.A: character.Agility = ReadAttribute("agility", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
+                case ConsoleKey.A: character.Agility = HandleAttributeInput("agility", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
 
-                case ConsoleKey.C: character.Constitution = ReadAttribute("constitution", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
+                case ConsoleKey.C: character.Constitution = HandleAttributeInput("constitution", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
 
-                case ConsoleKey.H: character.Charisma = ReadAttribute("charisma", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
+                case ConsoleKey.H: character.Charisma = HandleAttributeInput("charisma", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
 
                 case ConsoleKey.Q: return character; 
 
@@ -311,7 +348,11 @@ partial class Program
 
         } while (true);
     }
-    
+    /// <summary>
+    /// Displays the characters stat menu.
+    /// </summary>
+    /// <param name="character">The character that is being displayed.</param>
+    /// <param name="type">true if displaying for ViewCharacter function and false if displaying for EditCharacter function.</param>
     void DisplayStats(Character character, bool type )
     {
         if (type)
@@ -347,25 +388,56 @@ partial class Program
 
     }
 
-    void DeleteCharacter(Character character )
+    /// <summary>
+    /// Displays the message in a color that is used the given type.
+    /// </summary>
+    /// <param name="message">The message to be colored.</param>
+    /// <param name="type">The type of message. 1 = Asking, 2 = Confirmation, 3 = Error, 4 = Header.</param>
+    void Display ( string message, int type )
     {
-        if (String.IsNullOrEmpty(character.Name))
+        
+        switch (type)
         {
-            Display("ERROR: No character to delete.", 3);
+            case 1: Console.ForegroundColor = ConsoleColor.Green; break;
+            case 2: Console.ForegroundColor = ConsoleColor.Cyan; break;
+            case 3: Console.ForegroundColor = ConsoleColor.Red; break;
+            case 4: Console.ForegroundColor = ConsoleColor.Yellow; break;
         }
-        else if(Confirm("Are you sure you want to delete the character? (Y/N)"))
-        {
-           character.Name =  "";
-           Display("Character deleted.", 2);
+        Console.WriteLine(message);
+        Console.ResetColor();
 
-        } else
-        {
-            Display("Character not deleted.", 2);
-        }
     }
-    
 
-    
+    /// <summary>
+    /// Confirms if user wants to proceed.
+    /// </summary>
+    /// <param name="message">Confirmation message that the user must confirm.</param>
+    /// <returns>true if user confirms the message and false if the user chooses to not confirm.</returns>
+    bool Confirm ( string message )
+    {
+        Display(message, 1);
+
+        //Handle errors
+        while (true)
+        {
+
+            switch (Console.ReadKey(true).Key)
+            {
+
+                case ConsoleKey.Y: return true;
+
+                case ConsoleKey.N: return false;
+
+            };
+
+            Display("\nERROR: Invalid input entered. Please enter Y or N.\n", 3);
+
+        };
+    }
+
+
+
+
 }
 
 
@@ -378,5 +450,6 @@ partial class Program
  * 4. Should i make the repetitive output in ViewCharacter and EditCharacter a function.
  * 5. How should I handle the minimum and maximum attribute values. Handle in character class right now
  * 6. Do I need to put input validation in the class or is it fine in the program.
+ * 7. Is the attribute range 1-100 inclusive?
  * 
 */
