@@ -16,6 +16,7 @@ partial class Program
         app.Run();
     }
 
+    
     void Run ()
     {
         //add, delete, view, edit
@@ -39,301 +40,329 @@ partial class Program
 
                 case 0: done = true; break;
 
-                case 100: Console.WriteLine("Lets continue the character creator!"); break;
+                case 100: Display("Lets continue the character creator!", 2); break;
 
-                case 102: Console.WriteLine("Invalid input entered. Your input must be one of the following: A, V, E, D, Q"); break;
+                case 102: Display("Invalid input entered. Your input must be one of the following: A, V, E, D, Q", 3); break;
             };
 
         } while (!done);
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    void ShowMenuDirections ()
+    {
+        Console.WriteLine("\n---------------\n");
+        Console.WriteLine("A) Add New Character");
+        Console.WriteLine("V) View Character");
+        Console.WriteLine("E) Edit Character");
+        Console.WriteLine("D) Delete Character");
+        Console.WriteLine("Q) End Character Creator");
+        Console.WriteLine("\n---------------\n");
+    }
 
-        void ShowMenuDirections ()
+    int ChoosePath ()
+    {
+        do
         {
-            Console.WriteLine("\n---------------\n");
-            Console.WriteLine("A) Add New Character");
-            Console.WriteLine("V) View Character");
-            Console.WriteLine("E) Edit Character");
-            Console.WriteLine("D) Delete Character");
-            Console.WriteLine("Q) End Character Creator");
-            Console.WriteLine("\n---------------\n");
-        }
-
-        int ChoosePath ()
-        {
-            do
+            switch (Console.ReadKey(true).Key)
             {
-                switch (Console.ReadKey(true).Key)
-                {
-                    case ConsoleKey.A: return 1;
+                case ConsoleKey.A: return 1;
 
-                    case ConsoleKey.V: return 2;
+                case ConsoleKey.V: return 2;
 
-                    case ConsoleKey.E: return 3;
+                case ConsoleKey.E: return 3;
 
-                    case ConsoleKey.D: return 4;
+                case ConsoleKey.D: return 4;
 
-                    case ConsoleKey.Q: return (Confirm("Are you sure you want to quit?(Y/N)") ? 0 : 100);
+                case ConsoleKey.Q: return (Confirm("Are you sure you want to quit?(Y/N)") ? 0 : 100);
 
-                    default: return 102;
-                };
+                default: return 102;
+            };
 
-            } while (true);
-        }
+        } while (true);
+    }
 
 
-      
+    
 
-        Character AddCharacter ()
+    Character AddCharacter ()
+    {
+        //var character = new Character(ReadString("Enter the character's name: ", true), ReadProfession(), ReadRace(), ReadString("Enter the character's biography", false));
+        do
         {
-           //var character = new Character(ReadString("Enter the character's name: ", true), ReadProfession(), ReadRace(), ReadString("Enter the character's biography", false));
-           
-           var character = new Character();
-           character.Name = ReadString("Enter the character's name: ", true);
-           character.Profession = ReadProfession();
-           character.Race = ReadRace();
-           character.Biography = ReadString("Enter the character's biography(Optional): ", false);
-           
-
-           character.Strength = ReadAttribute("strength", character.MinimumAttributeValue, character.MaximumAttributeValue);
-           character.Intelligence = ReadAttribute("intelligence", character.MinimumAttributeValue, character.MaximumAttributeValue);
-           character.Agility = ReadAttribute("agility", character.MinimumAttributeValue, character.MaximumAttributeValue);
-           character.Constitution = ReadAttribute("constitution", character.MinimumAttributeValue, character.MaximumAttributeValue);
-           character.Charisma = ReadAttribute("charisma", character.MinimumAttributeValue, character.MaximumAttributeValue);
-
-           return character;
-            
-        }
-
-        string ReadProfession()
-        {
-            
-            DisplayProfessions();
-            do
-            {
-                switch (Console.ReadKey(true).Key)
-                {
-                    case ConsoleKey.F: Console.WriteLine("Profession selected: Fighter"); return "Fighter";
-
-                    case ConsoleKey.H: Console.WriteLine("Profession selected: Hunter"); return "Hunter";
-
-                    case ConsoleKey.P: Console.WriteLine("Profession selected: Priest"); return "Priest";
-
-                    case ConsoleKey.R: Console.WriteLine("Profession selected: Rogue"); return "Rogue"; 
-
-                    case ConsoleKey.W: Console.WriteLine("Profession selected: Wizard"); return "Wizard";
-
-                };
-                Console.WriteLine("Options are F) Fighter, H) Hunter, P) Priest, R) Rogue, W) Wizard");
-            } while (true);
+            var character = new Character();
+            character.Name = ReadString("Enter the character's name: ", true);
+            character.Profession = ReadProfession();
+            character.Race = ReadRace();
+            character.Biography = ReadString("\nEnter the character's biography(Optional): ", false);
 
 
-        }
+            character.Strength = ReadAttribute("strength", character.MinimumAttributeValue, character.MaximumAttributeValue);
+            character.Intelligence = ReadAttribute("intelligence", character.MinimumAttributeValue, character.MaximumAttributeValue);
+            character.Agility = ReadAttribute("agility", character.MinimumAttributeValue, character.MaximumAttributeValue);
+            character.Constitution = ReadAttribute("constitution", character.MinimumAttributeValue, character.MaximumAttributeValue);
+            character.Charisma = ReadAttribute("charisma", character.MinimumAttributeValue, character.MaximumAttributeValue);
 
 
-        void DisplayProfessions ()
-        {
-            Console.WriteLine("\nPick one of the following professions for the character:");
-            Console.WriteLine("F) Fighter");
-            Console.WriteLine("H) Hunter");
-            Console.WriteLine("P) Priest");
-            Console.WriteLine("R) Rogue");
-            Console.WriteLine("W) Wizard");
-        }
+            var error = character.Validate();
+            if (String.IsNullOrEmpty(error))
+                return character;
 
-        string ReadRace ()
-        {
-            DisplayRaces();
-            do
-            {
-                switch (Console.ReadKey(true).Key)
-                {
-                    case ConsoleKey.D: Console.WriteLine("Race selected: Dwarf"); return "Dwarf";
-
-                    case ConsoleKey.E: Console.WriteLine("Race selected: Elf"); return "Elf";
-
-                    case ConsoleKey.G: Console.WriteLine("Race selected: Gnome"); return "Gnome";
-
-                    case ConsoleKey.F: Console.WriteLine("Race selected: Half Elf"); return "Half Elf";
-
-                    case ConsoleKey.H: Console.WriteLine("Race selected: Human"); return "Human";
-
-                    //default: Console.WriteLine("Options are D) Dwarf, E) Elf, G) Gnome, F) Half Elf, H) Human"); continue;
-
-                };
-                Console.WriteLine("Options are D) Dwarf, E) Elf, G) Gnome, F) Half Elf, H) Human");
-            } while (true);
-        }
-
-        void DisplayRaces ()
-        {
-            Console.WriteLine("\nPick one of the following races for the character:");
-            Console.WriteLine("D) Dwarf");
-            Console.WriteLine("E) Elf");
-            Console.WriteLine("G) Gnome");
-            Console.WriteLine("F) Half Elf");
-            Console.WriteLine("H) Human");
-        }
-
-        string ReadString ( string message, bool isRequired )
-        {
-            Console.WriteLine(message);
-
-            do
-            {
-                string value = Console.ReadLine().Trim();
-
-                if (!isRequired || !String.IsNullOrEmpty(value))
-                    return value;
-
-                Console.WriteLine("Value is required");
-            } while (true);
-        }
-
-
+            Display($"ERROR: {error}",3);
+        } while (true);
         
-        int ReadAttribute ( string message, int minimumValue, int maximumValue )
+        
+    }
+
+    string ReadProfession()
+    {
+        
+        DisplayProfessions();
+        do
         {
-            
-
-            do
+            switch (Console.ReadKey(true).Key)
             {
-                Console.WriteLine($"\nEnter the character's {message} attribute value ({minimumValue}-{maximumValue}): ");
-                string value = Console.ReadLine();
+                case ConsoleKey.F: Display("Profession selected: Fighter", 2); return "Fighter";
 
-                if (Int32.TryParse(value, out var result))
-                    if (result >= minimumValue && result <= maximumValue) //&& Confirm($"Please confirm the value of {result} for attribute {message} (Y/N)"))
-                        return result;
+                case ConsoleKey.H: Display("Profession selected: Hunter", 2); return "Hunter";
 
-                Console.WriteLine($"Value must be at least {minimumValue} and less than or equal to {maximumValue}");
-            } while (true);
-        }
+                case ConsoleKey.P: Display("Profession selected: Priest", 2); return "Priest";
 
-        bool Confirm( string message )
-        {
-            Console.WriteLine(message);
+                case ConsoleKey.R: Display("Profession selected: Rogue", 2); return "Rogue"; 
 
-            //Handle errors
-            while (true)
-            {
-             
-                switch (Console.ReadKey(true).Key)
-                {
-                    
-                    case ConsoleKey.Y: return true;
-
-                    case ConsoleKey.N: return false;
-                             
-                };
-
-                Console.WriteLine("\nInvalid input entered. Please enter Y or N.\n");
+                case ConsoleKey.W: Display("Profession selected: Wizard", 2); return "Wizard";
 
             };
-        }
-    
-        void ViewCharacter(Character character )
+            Display("Error: Options are F) Fighter, H) Hunter, P) Priest, R) Rogue, W) Wizard", 3);
+        } while (true);
+
+
+    }
+
+
+    void DisplayProfessions ()
+    {
+        Display("\nPick one of the following professions for the character: ", 1);
+        Console.WriteLine("F) Fighter");
+        Console.WriteLine("H) Hunter");
+        Console.WriteLine("P) Priest");
+        Console.WriteLine("R) Rogue");
+        Console.WriteLine("W) Wizard");
+    }
+
+    string ReadRace ()
+    {
+        DisplayRaces();
+        do
         {
-            if (String.IsNullOrEmpty(character.Name))
+            switch (Console.ReadKey(true).Key)
             {
-                Console.WriteLine("No character available.");
-                return;
-            }
+                case ConsoleKey.D: Display("Race selected: Dwarf", 2); return "Dwarf";
 
-            DisplayStats(character, true);
+                case ConsoleKey.E: Display("Race selected: Elf", 2); return "Elf";
 
-        }
+                case ConsoleKey.G: Display("Race selected: Gnome", 2); return "Gnome";
 
-        Character EditCharacter( Character character )
-        {
-            if (String.IsNullOrEmpty(character.Name))
-            {
-                Console.WriteLine("Creating new character because there is no existing character.");
-                return AddCharacter();
-            }
+                case ConsoleKey.F: Display("Race selected: Half Elf", 2); return "Half Elf";
 
-            return DisplayEditMenu(character);
+                case ConsoleKey.H: Display("Race selected: Human", 2); return "Human";
 
-        }
+                //default: Console.WriteLine("Options are D) Dwarf, E) Elf, G) Gnome, F) Half Elf, H) Human"); continue;
 
-        Character DisplayEditMenu(Character character )
-        {
-            //var editedCharacter = character;
-            do
-            {
-                DisplayStats(character, false);
-                switch (Console.ReadKey(true).Key)
-                {
-                    case ConsoleKey.N: character.Name = ReadString("Enter the character's name: ", true); break;
+            };
+            Display("ERROR: Options are D) Dwarf, E) Elf, G) Gnome, F) Half Elf, H) Human", 3);
+        } while (true);
+    }
 
-                    case ConsoleKey.P: character.Profession = ReadProfession(); break;
-
-                    case ConsoleKey.R: character.Race = ReadRace(); break;
-
-                    case ConsoleKey.B: character.Biography = ReadString("Enter the character's biography(Optional): ", false); break;
-
-                    case ConsoleKey.S: character.Strength = ReadAttribute("strength", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
-
-                    case ConsoleKey.I: character.Intelligence = ReadAttribute("intelligence", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
-
-                    case ConsoleKey.A: character.Agility = ReadAttribute("agility", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
-
-                    case ConsoleKey.C: character.Constitution = ReadAttribute("constitution", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
-
-                    case ConsoleKey.H: character.Charisma = ReadAttribute("charisma", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
-
-                    case ConsoleKey.Q: return character; 
-
-                };
-
-            } while (true);
-        }
+    void DisplayRaces ()
+    {
         
-        void DisplayStats(Character character, bool type )
+        Display("\nPick one of the following races for the character:", 1);
+        Console.WriteLine("D) Dwarf");
+        Console.WriteLine("E) Elf");
+        Console.WriteLine("G) Gnome");
+        Console.WriteLine("F) Half Elf");
+        Console.WriteLine("H) Human");
+        
+    }
+
+    string ReadString ( string message, bool isRequired )
+    {
+        Display(message, 1);
+
+        do
         {
-            if (type)
+            string value = Console.ReadLine().Trim();
+
+            if (!isRequired || !String.IsNullOrEmpty(value))
+                return value;
+
+            Display("ERROR: Value is required", 3);
+        } while (true);
+    }
+
+    void Display (string message, int type)
+    {
+        //1 = Asking, 2 = Confirmation, 3 = Error
+        switch (type)
+        {
+            case 1: Console.ForegroundColor = ConsoleColor.Green; break;
+            case 2: Console.ForegroundColor = ConsoleColor.Cyan; break;
+            case 3: Console.ForegroundColor = ConsoleColor.Red; break;
+            case 4: Console.ForegroundColor = ConsoleColor.Yellow; break;
+        }
+        Console.WriteLine(message);
+        Console.ResetColor();
+
+    }
+    
+    int ReadAttribute ( string message, int minimumValue, int maximumValue )
+    {
+        do
+        {
+
+            Display($"\nEnter the character's {message} attribute value ({minimumValue}-{maximumValue}): ", 1);
+            string value = Console.ReadLine();
+
+            if (Int32.TryParse(value, out var result))
+                if (result >= minimumValue && result <= maximumValue) //&& Confirm($"Please confirm the value of {result} for attribute {message} (Y/N)"))
+                    return result;
+
+            Display($"ERROR: Value must be at least {minimumValue} and at most {maximumValue}.", 3);
+        } while (true);
+    }
+
+    bool Confirm( string message )
+    {
+        Display(message,1);
+
+        //Handle errors
+        while (true)
+        {
+         
+            switch (Console.ReadKey(true).Key)
             {
-                Console.WriteLine("-----Character Information-----");
-                Console.WriteLine($"Name: {character.Name}");
-                Console.WriteLine($"Profession: {character.Profession}");
-                Console.WriteLine($"Race: {character.Race}");
-                Console.WriteLine(!String.IsNullOrEmpty(character.Biography) ? $"Biography: {character.Biography}" : "Biography: ");
+                
+                case ConsoleKey.Y: return true;
 
-                Console.WriteLine("--Attributes--");
-                Console.WriteLine($"Strength: {character.Strength}");
-                Console.WriteLine($"Intelligence: {character.Intelligence}");
-                Console.WriteLine($"Agility: {character.Agility}");
-                Console.WriteLine($"Constitution: {character.Constitution}");
-                Console.WriteLine($"Charisma: {character.Charisma}");
-            } else
-            {
-                Console.WriteLine("-----Character Information-----");
-                Console.WriteLine($"N) Name: {character.Name}");
-                Console.WriteLine($"P) Profession: {character.Profession}");
-                Console.WriteLine($"R) Race: {character.Race}");
-                Console.WriteLine(!String.IsNullOrEmpty(character.Biography) ? $"B) Biography: {character.Biography}" : "B) Biography: ");
+                case ConsoleKey.N: return false;
+                         
+            };
 
-                Console.WriteLine("--Attributes--");
-                Console.WriteLine($"S) Strength: {character.Strength}");
-                Console.WriteLine($"I) Intelligence: {character.Intelligence}");
-                Console.WriteLine($"A) Agility: {character.Agility}");
-                Console.WriteLine($"C) Constitution: {character.Constitution}");
-                Console.WriteLine($"H) Charisma: {character.Charisma}");
-                Console.WriteLine("Q) Quit the edit character menu.");
-            }
+            Display("\nERROR: Invalid input entered. Please enter Y or N.\n", 3);
 
+        };
+    }
+    
+    void ViewCharacter(Character character )
+    {
+        if (String.IsNullOrEmpty(character.Name))
+        {
+            Display("ERROR: No character available.", 3);
+            return;
         }
 
-        void DeleteCharacter(Character character )
+        DisplayStats(character, true);
+
+    }
+
+    Character EditCharacter( Character character )
+    {
+        if (String.IsNullOrEmpty(character.Name))
         {
-            if (String.IsNullOrEmpty(character.Name))
-            {
-                Console.WriteLine("No character to delete.");
-            }
-            else
-            {
-                character.Name = "";
-                Console.WriteLine("Character deleted.");
-            }
+            Display("Creating new character because there is no existing character.", 2);
+            return AddCharacter();
         }
+
+        return DisplayEditMenu(character);
+
+    }
+
+    Character DisplayEditMenu(Character character )
+    {
+        //var editedCharacter = character;
+        do
+        {
+            DisplayStats(character, false);
+            switch (Console.ReadKey(true).Key)
+            {
+                case ConsoleKey.N: character.Name = ReadString("Enter the character's name: ", true); break;
+
+                case ConsoleKey.P: character.Profession = ReadProfession(); break;
+
+                case ConsoleKey.R: character.Race = ReadRace(); break;
+
+                case ConsoleKey.B: character.Biography = ReadString("Enter the character's biography(Optional): ", false); break;
+
+                case ConsoleKey.S: character.Strength = ReadAttribute("strength", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
+
+                case ConsoleKey.I: character.Intelligence = ReadAttribute("intelligence", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
+
+                case ConsoleKey.A: character.Agility = ReadAttribute("agility", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
+
+                case ConsoleKey.C: character.Constitution = ReadAttribute("constitution", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
+
+                case ConsoleKey.H: character.Charisma = ReadAttribute("charisma", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
+
+                case ConsoleKey.Q: return character; 
+
+            };
+
+        } while (true);
+    }
+    
+    void DisplayStats(Character character, bool type )
+    {
+        if (type)
+        {
+            Display("-----Character Information-----", 4);
+            Console.WriteLine($"Name: {character.Name}");
+            Console.WriteLine($"Profession: {character.Profession}");
+            Console.WriteLine($"Race: {character.Race}");
+            Console.WriteLine(!String.IsNullOrEmpty(character.Biography) ? $"Biography: {character.Biography}" : "Biography: ");
+
+            Display("--Attributes--", 4);
+            Console.WriteLine($"Strength: {character.Strength}");
+            Console.WriteLine($"Intelligence: {character.Intelligence}");
+            Console.WriteLine($"Agility: {character.Agility}");
+            Console.WriteLine($"Constitution: {character.Constitution}");
+            Console.WriteLine($"Charisma: {character.Charisma}");
+        } else
+        {
+            Display("\n-----Character Information-----", 4);
+            Console.WriteLine($"N) Name: {character.Name}");
+            Console.WriteLine($"P) Profession: {character.Profession}");
+            Console.WriteLine($"R) Race: {character.Race}");
+            Console.WriteLine(!String.IsNullOrEmpty(character.Biography) ? $"B) Biography: {character.Biography}" : "B) Biography: ");
+
+            Display("--Attributes--", 4);
+            Console.WriteLine($"S) Strength: {character.Strength}");
+            Console.WriteLine($"I) Intelligence: {character.Intelligence}");
+            Console.WriteLine($"A) Agility: {character.Agility}");
+            Console.WriteLine($"C) Constitution: {character.Constitution}");
+            Console.WriteLine($"H) Charisma: {character.Charisma}");
+            Console.WriteLine("Q) Quit the edit character menu.");
+        }
+
+    }
+
+    void DeleteCharacter(Character character )
+    {
+        if (String.IsNullOrEmpty(character.Name))
+        {
+            Display("ERROR: No character to delete.", 3);
+        }
+        else if(Confirm("Are you sure you want to delete the character? (Y/N)"))
+        {
+           character.Name =  "";
+           Display("Character deleted.", 2);
+
+        } else
+        {
+            Display("Character not deleted.", 2);
+        }
+    }
     
 
     
