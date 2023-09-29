@@ -4,8 +4,6 @@
  * 
  * Sample movie library
  */
-
-
 using MovieLibrary;
 
 namespace MovieLibrary.ConsoleHost;
@@ -77,7 +75,7 @@ partial class Program
     //Get a new movie
     Movie AddMovie ()
     {
-        var movie = new Movie();
+        var movie = new Movie(10, "Something");
 
         do
         {
@@ -89,11 +87,15 @@ partial class Program
 
             movie.Genre = ReadString("Enter a genre: ", false);
             movie.Rating = ReadRating("Enter a rating: ");
+            //if (movie.Rating != null)
+            //    movie.Rating.Name = "Whatever";
 
             movie.IsBlackAndWhite = ReadBoolean("Black and White (Y/N)?");
+            //movie.NeedsIntermission = true;
 
             //Validate
-            var error = movie.Validate();   //Validate(movie)
+            ValidatableObject validInstance = movie;
+            var error = validInstance.Validate();   //Validate(movie)
             if (String.IsNullOrEmpty(error))
                 return movie;
 
@@ -138,7 +140,7 @@ partial class Program
         string message = $"Run Length: {movie.RunLength} mins";
         Console.WriteLine(message);
         if (movie.NeedsIntermission)
-            Console.WriteLine("Includes Intermission");
+            Console.WriteLine("Includes intermission");
 
         Console.WriteLine($"Released {movie.ReleaseYear}");
         Console.WriteLine(movie.Genre);
@@ -214,7 +216,7 @@ partial class Program
         } while (true);
     }
 
-    string ReadRating ( string message )
+    Rating ReadRating ( string message )
     {
         Console.WriteLine(message);
 
@@ -222,15 +224,15 @@ partial class Program
         {
             string value = Console.ReadLine();
             if (String.Equals(value, "PG", StringComparison.CurrentCultureIgnoreCase))
-                return "PG";
+                return Rating.PG;
             else if (String.Equals(value, "G", StringComparison.CurrentCultureIgnoreCase))
-                return "G";
+                return Rating.G;
             else if (String.Equals(value, "PG-13", StringComparison.CurrentCultureIgnoreCase))
-                return "PG-13";
+                return Rating.PG13;
             else if (String.Equals(value, "R", StringComparison.CurrentCultureIgnoreCase))
-                return "R";
+                return Rating.R;
             else if (String.IsNullOrEmpty(value))
-                return "";
+                return null;
 
             Console.WriteLine("Invalid rating");
         } while (true);
