@@ -38,6 +38,8 @@ public class Character
     private int _agility;
     private int _constitution;
     private int _charisma;
+    private int _minimumAttributeValue = 1;
+    private int _maximumAttributeValue = 100;
 
     public int Strength { get; set; } = 1;
     public int Intelligence { get; set; } = 1;
@@ -46,6 +48,10 @@ public class Character
 
     public int Constitution { get; set; } = 1;
     public int Charisma { get; set; } = 1;
+
+    public int MaximumAttributeValue { get; }
+
+    public int MinimumAttributeValue { get; }
 
 
   

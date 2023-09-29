@@ -8,6 +8,8 @@
 
 partial class Program 
 {
+    
+
     static void Main ()
     {
         var app = new Program();
@@ -17,12 +19,9 @@ partial class Program
     void Run ()
     {
         //add, delete, view, edit
-        Character player = new Character ();
-        DisplayIntro();
+        Character player = new Character();
         var done = false;
-        int minimumAttributeValue = 1;
-        int maximumAttributeValue = 100;
-
+       
         do
         {
             ShowMenuDirections();
@@ -33,8 +32,10 @@ partial class Program
                 case 1: player = AddCharacter(); break;
 
                 case 2: ViewCharacter(player); break;
-                
+
                 case 3: player = EditCharacter(player); break;
+
+                case 4: DeleteCharacter(player); break;
 
                 case 0: done = true; break;
 
@@ -44,11 +45,7 @@ partial class Program
             };
 
         } while (!done);
-
-        void DisplayIntro ()
-        {
-            Console.WriteLine("Intro");
-        }
+    }
 
         void ShowMenuDirections ()
         {
@@ -94,14 +91,14 @@ partial class Program
            character.Name = ReadString("Enter the character's name: ", true);
            character.Profession = ReadProfession();
            character.Race = ReadRace();
-           character.Biography = ReadString("Enter the character's biography: ", false);
+           character.Biography = ReadString("Enter the character's biography(Optional): ", false);
            
 
-           character.Strength = ReadAttribute("strength", minimumAttributeValue, maximumAttributeValue);
-           character.Intelligence = ReadAttribute("intelligence", minimumAttributeValue, maximumAttributeValue);
-           character.Agility = ReadAttribute("agility", minimumAttributeValue, maximumAttributeValue);
-           character.Constitution = ReadAttribute("constitution", minimumAttributeValue, maximumAttributeValue);
-           character.Charisma = ReadAttribute("charisma", minimumAttributeValue, maximumAttributeValue);
+           character.Strength = ReadAttribute("strength", character.MinimumAttributeValue, character.MaximumAttributeValue);
+           character.Intelligence = ReadAttribute("intelligence", character.MinimumAttributeValue, character.MaximumAttributeValue);
+           character.Agility = ReadAttribute("agility", character.MinimumAttributeValue, character.MaximumAttributeValue);
+           character.Constitution = ReadAttribute("constitution", character.MinimumAttributeValue, character.MaximumAttributeValue);
+           character.Charisma = ReadAttribute("charisma", character.MinimumAttributeValue, character.MaximumAttributeValue);
 
            return character;
             
@@ -241,18 +238,7 @@ partial class Program
                 return;
             }
 
-            Console.WriteLine("-----Character Information-----");
-            Console.WriteLine($"Name: {character.Name}");
-            Console.WriteLine($"Profession: {character.Profession}");
-            Console.WriteLine($"Race: {character.Race}");
-            Console.WriteLine(!String.IsNullOrEmpty(character.Biography) ? $"Biography: {character.Biography}" : "Biography: "); 
-            
-            Console.WriteLine("--Attributes--");
-            Console.WriteLine($"Strength: {character.Strength}");
-            Console.WriteLine($"Intelligence: {character.Intelligence}");
-            Console.WriteLine($"Agility: {character.Agility}");
-            Console.WriteLine($"Constitution: {character.Constitution}");
-            Console.WriteLine($"Charisma: {character.Charisma}");
+            DisplayStats(character, true);
 
         }
 
@@ -282,17 +268,17 @@ partial class Program
 
                     case ConsoleKey.R: character.Race = ReadRace(); break;
 
-                    case ConsoleKey.B: character.Biography = ReadString("Enter the character's biography: ", false); break;
+                    case ConsoleKey.B: character.Biography = ReadString("Enter the character's biography(Optional): ", false); break;
 
-                    case ConsoleKey.S: character.Strength = ReadAttribute("strength", minimumAttributeValue, maximumAttributeValue); break;
+                    case ConsoleKey.S: character.Strength = ReadAttribute("strength", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
 
-                    case ConsoleKey.I: character.Intelligence = ReadAttribute("intelligence", minimumAttributeValue, maximumAttributeValue); break;
+                    case ConsoleKey.I: character.Intelligence = ReadAttribute("intelligence", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
 
-                    case ConsoleKey.A: character.Agility = ReadAttribute("agility", minimumAttributeValue, maximumAttributeValue); break;
+                    case ConsoleKey.A: character.Agility = ReadAttribute("agility", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
 
-                    case ConsoleKey.C: character.Constitution = ReadAttribute("constitution", minimumAttributeValue, maximumAttributeValue); break;
+                    case ConsoleKey.C: character.Constitution = ReadAttribute("constitution", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
 
-                    case ConsoleKey.H: character.Charisma = ReadAttribute("charisma", minimumAttributeValue, maximumAttributeValue); break;
+                    case ConsoleKey.H: character.Charisma = ReadAttribute("charisma", character.MinimumAttributeValue, character.MaximumAttributeValue); break;
 
                     case ConsoleKey.Q: return character; 
 
@@ -335,7 +321,20 @@ partial class Program
             }
 
         }
-    }
+
+        void DeleteCharacter(Character character )
+        {
+            if (String.IsNullOrEmpty(character.Name))
+            {
+                Console.WriteLine("No character to delete.");
+            }
+            else
+            {
+                character.Name = "";
+                Console.WriteLine("Character deleted.");
+            }
+        }
+    
 
     
 }
@@ -348,6 +347,7 @@ partial class Program
  * 2. Check to see if can use custom constructer instead of current implementation
  * 3. Check to see if class structure is correct.
  * 4. Should i make the repetitive output in ViewCharacter and EditCharacter a function.
- * 5. How should I handle the minimum and maximum attribute values.
+ * 5. How should I handle the minimum and maximum attribute values. Handle in character class right now
+ * 6. Do I need to put input validation in the class or is it fine in the program.
  * 
 */
