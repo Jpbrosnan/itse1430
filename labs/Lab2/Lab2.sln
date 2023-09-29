@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JonathanBrosnan.CharacterCreator.ConsoleHost", "JonathanBrosnan.CharacterCreator.ConsoleHost\JonathanBrosnan.CharacterCreator.ConsoleHost.csproj", "{6433D8E0-EB13-4727-9C68-87601E0F730A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JonathanBrosnan.CharacterCreator", "JonathanBrosnan.CharacterCreator\JonathanBrosnan.CharacterCreator.csproj", "{9B6E44A7-5905-4963-886A-C6C1EAA6F4B0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6433D8E0-EB13-4727-9C68-87601E0F730A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6433D8E0-EB13-4727-9C68-87601E0F730A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6433D8E0-EB13-4727-9C68-87601E0F730A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6433D8E0-EB13-4727-9C68-87601E0F730A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B6E44A7-5905-4963-886A-C6C1EAA6F4B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B6E44A7-5905-4963-886A-C6C1EAA6F4B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B6E44A7-5905-4963-886A-C6C1EAA6F4B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B6E44A7-5905-4963-886A-C6C1EAA6F4B0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {938ABD43-6757-4EFC-9161-8E1FABBCDC87}
+	EndGlobalSection
+EndGlobal
