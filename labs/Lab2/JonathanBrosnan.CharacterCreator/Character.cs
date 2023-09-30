@@ -24,6 +24,7 @@ public class Character
         Profession = profession;
         Race = race;
     }
+
     /// <summary>
     /// Custom constructor without biography.
     /// </summary>
@@ -35,11 +36,6 @@ public class Character
     {
         Biography = biography;
     }
-
-
-
-
-
 
 
     /// <summary>
@@ -56,6 +52,7 @@ public class Character
         set {
             if (value != null)
                 value = value.Trim();
+
             _name = value;
         } 
     }
@@ -73,6 +70,7 @@ public class Character
         set {
             if (value != null)
                 value = value.Trim();
+
             _profession = value;
         }
     }
@@ -90,6 +88,7 @@ public class Character
         set {
             if (value != null)
                 value = value.Trim();
+
             _race = value;
         }
     }
@@ -109,10 +108,7 @@ public class Character
             {
                 value = value.Trim();
                 _biography = value;
-            } else
-            {
-                _biography = "";
-            }
+            }            
         }
     }
 
@@ -149,21 +145,12 @@ public class Character
     /// <summary>
     /// Gets the minimum attribute value.
     /// </summary>
-    public int MinimumAttributeValue
-    {
-        get {
-            return _minimumAttributeValue;
-        }
-    }
+    public int MinimumAttributeValue{ get { return _minimumAttributeValue; } }
 
     /// <summary>
     /// Gets the maximum attribute value.
     /// </summary>
-    public int MaximumAttributeValue {
-        get {
-            return _maximumAttributeValue;
-        }
-    }
+    public int MaximumAttributeValue { get { return _maximumAttributeValue; } }
 
     //Fields - data
 
@@ -190,6 +177,10 @@ public class Character
     /// </summary>
     private int _maximumAttributeValue = 100;
 
+    /// <summary>
+    /// Validates the character instance.
+    /// </summary>
+    /// <returns>The error message or an empty string if there are no errors. </returns>
     public string Validate ()
     {
         if (!TryValidate(out var message))
@@ -198,6 +189,11 @@ public class Character
         return "";
     }
 
+    /// <summary>
+    /// Validates the character instance.
+    /// </summary>
+    /// <param name="message">Error message. If the character is valid, message will be an empty string.</param>
+    /// <returns>false if character instance fails validation and true if it passes validation.</returns>
     private bool TryValidate(out string message)
     {
         if (String.IsNullOrEmpty(_name))
@@ -220,31 +216,31 @@ public class Character
 
         if (!CheckAttributeRange(_strength))
         {
-            message = ValidateAttribute("strength");
+            message = DisplayAttributeWarning("strength");
             return false;
         }
 
         if (!CheckAttributeRange(_intelligence))
         {
-            message = ValidateAttribute("intelligence");
+            message = DisplayAttributeWarning("intelligence");
             return false;
         }
 
         if (!CheckAttributeRange(_agility))
         {
-            message = ValidateAttribute("agility");
+            message = DisplayAttributeWarning("agility");
             return false;
         }
 
         if (!CheckAttributeRange(_constitution))
         {
-            message = ValidateAttribute("constitution");
+            message = DisplayAttributeWarning("constitution");
             return false;
         }
 
         if (!CheckAttributeRange(_charisma))
         {
-            message = ValidateAttribute("charisma");
+            message = DisplayAttributeWarning("charisma");
             return false;
         }
 
@@ -252,6 +248,11 @@ public class Character
         return true;
     }
 
+    /// <summary>
+    /// Validates race value
+    /// </summary>
+    /// <param name="race">String race value.</param>
+    /// <returns>false if invalid race value and true if the race value passes validation.</returns>
     private bool ValidateRace (string race)
     {
         if (String.Equals(race, "Dwarf", StringComparison.CurrentCultureIgnoreCase))
@@ -268,6 +269,11 @@ public class Character
             return false;
     }
 
+    /// <summary>
+    /// Validates profession value.
+    /// </summary>
+    /// <param name="profession">String profession value.</param>
+    /// <returns>false if invalid profession value and true if the profession value passes validation.</returns>
     private bool ValidateProfession(string profession )
     {
         if (String.Equals(profession, "Fighter", StringComparison.CurrentCultureIgnoreCase))
@@ -284,17 +290,28 @@ public class Character
             return false;
     }
 
-    private string ValidateAttribute(string type)
+    /// <summary>
+    /// Display attribute range warning.
+    /// </summary>
+    /// <param name="type">The attribute type. Can be strength, intelligence, agility, constitution, and charisma. </param>
+    /// <returns>The warning string.</returns>
+    private string DisplayAttributeWarning(string type)
     {
-        return $"The {type} attribute must be between 1 - 100 inclusively.";
+        return $"The {type} attribute must be between {_minimumAttributeValue} - {_maximumAttributeValue} inclusively.";
     }
+
+    /// <summary>
+    /// Checks if attribute is valid. 
+    /// </summary>
+    /// <param name="attribute">The attribute integer value.</param>
+    /// <returns>true if in between valid range and false if outside valid range.</returns>
     private bool CheckAttributeRange (int attribute)
     {
-        if(attribute >= _minimumAttributeValue && attribute <= _maximumAttributeValue) return true;
+        if(attribute >= _minimumAttributeValue && attribute <= _maximumAttributeValue) 
+            return true;
 
         return false;
     }
 
 }
 
-//
