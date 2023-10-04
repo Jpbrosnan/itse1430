@@ -65,18 +65,12 @@ namespace MovieLibrary
         {
             //string get()
             get {
-                if (String.IsNullOrEmpty(_title))
-                    return "";
-
-                return _title;
+                return _title ?? "";
             }
 
             //void set(string value)
             set {
-                if (value != null)
-                    value = value.Trim();
-
-                _title = value;
+                _title = value?.Trim() ?? "";
             }
         }
 
