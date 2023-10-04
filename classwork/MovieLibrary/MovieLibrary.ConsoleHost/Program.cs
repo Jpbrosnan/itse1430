@@ -19,7 +19,7 @@ partial class Program
     void Run ()
     {
         //TODO: Remove this
-        Movie movie = new Movie();
+        Movie movie = null;
 
         //Entry point
         var done = false;
@@ -110,7 +110,7 @@ partial class Program
 
     bool DeleteMovie ( Movie movie )
     {
-        if (String.IsNullOrEmpty(movie.Title))
+        if (movie == null)
             return false;
 
         if (!Confirm($"Are you sure you want to delete the movie '{movie.Title}' (Y/N)?"))
@@ -251,5 +251,13 @@ partial class Program
 
             Console.WriteLine("Value is required");
         } while (true);
+    }
+
+    void Display(object value )
+    {
+        if(value is string)
+        {
+
+        }
     }
 }

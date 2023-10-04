@@ -220,5 +220,10 @@ namespace MovieLibrary
             message = "";
             return true;
         }
+
+        public override string ToString ()
+        {
+            return $"{Title} [{Description}]";
+        }
     }
 }
