@@ -4,39 +4,6 @@
 /// </summary>
 public class Character
 {
-    /// <summary>
-    /// Default constructor for character class.
-    /// </summary>
-    public Character ()
-    {
-       
-    }
-
-    /// <summary>
-    /// Custom constructor without biography.
-    /// </summary>
-    /// <param name="name">Name of character.</param>
-    /// <param name="profession">Profession of character. Possible professions are Fighter, Hunter, Priest, Rogue, and Wizard.</param>
-    /// <param name="race">Race of character. Possible races are Dwarf, Elf, Gnome, Half Elf, and Human.</param>
-    public Character ( string name, string profession, string race ) : this()
-    {
-        Name = name;
-        Profession = profession;
-        Race = race;
-    }
-
-    /// <summary>
-    /// Custom constructor without biography.
-    /// </summary>
-    /// <param name="name">Name of character.</param>
-    /// <param name="profession">Profession of character. Possible professions are Fighter, Hunter, Priest, Rogue, and Wizard.</param>
-    /// <param name="race">Race of character. Possible races are Dwarf, Elf, Gnome, Half Elf, and Human.</param>
-    /// <param name="biography">Small summary of character.</param>
-    public Character ( string name, string profession, string race, string biography ) : this(name, profession, race)
-    {
-        Biography = biography;
-    }
-
 
     /// <summary>
     /// Gets and sets the name of character.

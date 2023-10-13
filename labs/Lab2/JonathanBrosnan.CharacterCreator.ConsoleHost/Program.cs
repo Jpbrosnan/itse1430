@@ -302,7 +302,7 @@ partial class Program
             string value = Console.ReadLine();
 
             if (Int32.TryParse(value, out var result))
-                if (result >= minimumValue && result <= maximumValue) //&& Confirm($"Please confirm the value of {result} for attribute {message} (Y/N)"))
+                if (result >= minimumValue && result <= maximumValue)
                     return result;
 
             Display($"ERROR: Value must be at least {minimumValue} and at most {maximumValue}.", 3);
@@ -427,16 +427,3 @@ partial class Program
 }
 
 
-
-/*Questions:
- * 
- * 1. Check if my attribute validation is what he wants.
- * 2. Check to see if can use custom constructer instead of current implementation
- * 3. Check to see if class structure is correct.
- * 4. Should i make the repetitive output in ViewCharacter and EditCharacter a function.
- * 5. How should I handle the minimum and maximum attribute values. Handle in character class right now
- * 6. Do I need to put input validation in the class or is it fine in the program.
- * 7. Is the attribute range 1-100 inclusive?
- * 8. Should we use custom constructors in add character?
- * 
-*/
