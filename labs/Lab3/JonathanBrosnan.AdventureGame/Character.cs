@@ -1,16 +1,45 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
+
+namespace JonathanBrosnan.AdventureGame;
 /// <summary>
 /// Represents a character. Name, profession and race are required fields for a valid character.
 /// </summary>
-public class Character
+public class Character : IValidatableObject
 {
+
+    /// <summary>Initializes the Movie class.</summary>
+    public Character ()
+    {
+    }
+
+    /// <summary>Initializes the Movie class.</summary>
+    /// <param name="id">Identifier of the movie.</param>
+    public Character ( int id ) : this(id, "")
+    {
+    }
+
+    public Character ( string name ) : this(0, name)
+    {
+    }
+
+    public Character ( int id, string name )
+    {
+        Id = id;
+        Name = name;
+    }
+
+
+    public int Id { get; set; }
 
     /// <summary>
     /// Gets and sets the name of character.
     /// </summary>
     public string Name {
+
         get { return _name ?? ""; }
-        set { _name = value; }
+        set { _name = value?.Trim() ?? ""; }
     }
 
     /// <summary>
@@ -60,6 +89,8 @@ public class Character
     /// </summary>
     public int Charisma { get; set; }
 
+
+
  
 
     //Fields - data
@@ -99,8 +130,9 @@ public class Character
     /// </summary>
     /// <param name="message">Error message. If the character is valid, message will be an empty string.</param>
     /// <returns>false if character instance fails validation and true if it passes validation.</returns>
-    private bool TryValidate(out string message)
+    public bool TryValidate(out string message)
     {
+
         if (String.IsNullOrEmpty(_name))
         {
             message = "Name is required";
@@ -218,5 +250,61 @@ public class Character
         return false;
     }
 
+    public override string ToString ()
+    {
+        return $"Name: {Name}  Profession: {Profession}  Race: {Race})";
+    }
+
+    public IEnumerable<ValidationResult> Validate ( ValidationContext validationContext )
+    {
+
+        if (String.IsNullOrEmpty(_name))
+        {
+            yield return new ValidationResult("Name is required");
+        }
+        /*
+        if (!ValidateProfession(_profession))
+        {
+            message = "Profession is invalid. Profession must be one of the following: Fighter, Hunter, Priest, Rogue, Wizard";
+            return false;
+        }
+
+        if (!ValidateRace(_race))
+        {
+            message = "Race value is invalid. Race value must be one of the following: Dwarf, Elf, Gnome, Half Elf, Human";
+            return false;
+        }
+
+        if (!CheckAttributeRange(_strength))
+        {
+            message = CreateAttributeWarning("strength");
+            return false;
+        }
+
+        if (!CheckAttributeRange(_intelligence))
+        {
+            message = CreateAttributeWarning("intelligence");
+            return false;
+        }
+
+        if (!CheckAttributeRange(_agility))
+        {
+            message = CreateAttributeWarning("agility");
+            return false;
+        }
+
+        if (!CheckAttributeRange(_constitution))
+        {
+            message = CreateAttributeWarning("constitution");
+            return false;
+        }
+
+        if (!CheckAttributeRange(_charisma))
+        {
+            message = CreateAttributeWarning("charisma");
+            return false;
+        }
+        */
+    }
 }
 
