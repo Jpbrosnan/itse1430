@@ -41,6 +41,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
                 return;
 
             var item = new CharacterForm();
+            item.Text = "Edit Character";
             item.Character = character;
 
             do

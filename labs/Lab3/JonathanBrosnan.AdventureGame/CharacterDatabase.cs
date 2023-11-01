@@ -34,7 +34,7 @@ namespace JonathanBrosnan.AdventureGame
             //Collection initializer syntax
             // new T[] { E, E, E }
             //Set up movies
-            var characters = new[] {
+            /*var characters = new[] {
                     new Character() {
                         Name = "Luke",
                         Profession = "Hunter",
@@ -78,6 +78,7 @@ namespace JonathanBrosnan.AdventureGame
             //   Add(movies[index]);
             foreach (var character in characters)
                 Add(character);
+            */
         }
         public string Add ( Character character )
         {
@@ -95,6 +96,7 @@ namespace JonathanBrosnan.AdventureGame
             character.Id = _id++;
             _characters.Add(Clone(character));
             return "";
+            
         }
         public void Delete ( int id )
         {

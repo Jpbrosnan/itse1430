@@ -21,6 +21,30 @@ namespace JonathanBrosnan.AdventureGame.WinHost
 
         public Character Character { get; set; }
 
+        protected override void OnLoad ( EventArgs e )
+        {
+            base.OnLoad(e);
+
+            //Load movie data, if any
+            if (Character != null)
+            {
+                Text = "Edit Movie";
+
+                _charName.Text = Character.Name;
+                _charBiography.Text = Character.Biography;
+                _charProfession.Text = Character?.Profession;
+                _charRace.Text = Character?.Race;
+
+                _charStrength.Text = Character.Strength.ToString();
+                _charIntelligence.Text = Character.Intelligence.ToString();
+                _charAgility.Text = Character.Agility.ToString();
+                _charConstitution.Text = Character.Constitution.ToString();
+                _charCharisma.Text = Character.Charisma.ToString();
+
+            };
+
+            ValidateChildren();
+        }
         private void OnSave ( object sender, EventArgs e )
         {
             //Validate and abort if necessary
@@ -45,7 +69,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
             character.Constitution = GetInt32(_charConstitution, 0);
             character.Charisma = GetInt32(_charCharisma, 0);
 
-            /*
+
             if (!character.TryValidate(out var error))
             {
                 MessageBox.Show(this, error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -53,7 +77,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
                 DialogResult = DialogResult.None;
                 return;
             };
-            */
+
             Character = character;
             //DialogResult = DialogResult.OK;
             //Close();
@@ -78,7 +102,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
             if (String.IsNullOrEmpty(_charName.Text))
             {
                 //Invalid
-                _errors.SetError(_charName, "Poop Name is required");
+                _errors.SetError(_charName, "Name is required");
                 e.Cancel = true;
             } else
                 _errors.SetError(_charName, "");
@@ -104,29 +128,70 @@ namespace JonathanBrosnan.AdventureGame.WinHost
             } else
                 _errors.SetError(_charProfession, "");
         }
+
         private void OnValidateStrength ( object sender, System.ComponentModel.CancelEventArgs e )
         {
 
             var attribute = GetInt32(_charStrength, 0);
-            if (!(attribute >= Character.MinimumAttributeValue && attribute <= Character.MaximumAttributeValue))
+            if (!CheckAttributeRange(attribute))
             {
                 //Invalid
-                _errors.SetError(_charStrength, $"Attribute must be between {Character.MinimumAttributeValue} - {Character.MaximumAttributeValue} inclusively.");
+                _errors.SetError(_charStrength, CreateAttributeWarning("strength"));
                 e.Cancel = true;
             } else
                 _errors.SetError(_charStrength, "");
         }
+
         private void OnValidateIntelligence ( object sender, System.ComponentModel.CancelEventArgs e )
         {
 
-            var attribute = GetInt32(_charStrength, 0);
-            if (!(attribute >= Character.MinimumAttributeValue && attribute <= Character.MaximumAttributeValue))
+            var attribute = GetInt32(_charIntelligence, 0);
+            if (!CheckAttributeRange(attribute))
             {
                 //Invalid
-                _errors.SetError(_charStrength, $"Attribute must be between {Character.MinimumAttributeValue} - {Character.MaximumAttributeValue} inclusively.");
+                _errors.SetError(_charIntelligence, CreateAttributeWarning("intelligence"));
                 e.Cancel = true;
             } else
-                _errors.SetError(_charStrength, "");
+                _errors.SetError(_charIntelligence, "");
+        }
+
+        private void OnValidateAgility ( object sender, System.ComponentModel.CancelEventArgs e )
+        {
+
+            var attribute = GetInt32(_charAgility, 0);
+            if (!CheckAttributeRange(attribute))
+            {
+                //Invalid
+                _errors.SetError(_charAgility, CreateAttributeWarning("agility"));
+                e.Cancel = true;
+            } else
+                _errors.SetError(_charAgility, "");
+        }
+
+        private void OnValidateConstitution ( object sender, System.ComponentModel.CancelEventArgs e )
+        {
+
+            var attribute = GetInt32(_charConstitution, 0);
+            if (!CheckAttributeRange(attribute))
+            {
+                //Invalid
+                _errors.SetError(_charConstitution, CreateAttributeWarning("constitution"));
+                e.Cancel = true;
+            } else
+                _errors.SetError(_charConstitution, "");
+        }
+
+        private void OnValidateCharisma ( object sender, System.ComponentModel.CancelEventArgs e )
+        {
+
+            var attribute = GetInt32(_charCharisma, 0);
+            if (!CheckAttributeRange(attribute))
+            {
+                //Invalid
+                _errors.SetError(_charCharisma, CreateAttributeWarning("charisma"));
+                e.Cancel = true;
+            } else
+                _errors.SetError(_charCharisma, "");
         }
         private string CreateAttributeWarning ( string type )
         {
@@ -134,10 +199,8 @@ namespace JonathanBrosnan.AdventureGame.WinHost
         }
         private bool CheckAttributeRange ( int attribute )
         {
-            if (attribute >= Character.MinimumAttributeValue && attribute <= Character.MaximumAttributeValue)
-                return true;
+            return (attribute >= Character.MinimumAttributeValue && attribute <= Character.MaximumAttributeValue);
 
-            return false;
         }
     }
 }

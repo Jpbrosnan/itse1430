@@ -43,8 +43,8 @@
             _charProfession=new ComboBox();
             _charRace=new ComboBox();
             _charStrength=new TextBox();
-            _charIntelligence=new TextBox();
             _charAgility=new TextBox();
+            _charIntelligence=new TextBox();
             _charConstitution=new TextBox();
             _charCharisma=new TextBox();
             _btnSave=new Button();
@@ -55,6 +55,7 @@
             // 
             // _charName
             // 
+            _charName.ForeColor=SystemColors.WindowText;
             _charName.Location=new Point(84, 23);
             _charName.Name="_charName";
             _charName.Size=new Size(231, 23);
@@ -64,7 +65,7 @@
             // label1
             // 
             label1.AutoSize=true;
-            label1.Location=new Point(17, 23);
+            label1.Location=new Point(35, 23);
             label1.Name="label1";
             label1.Size=new Size(39, 15);
             label1.TabIndex=1;
@@ -73,7 +74,7 @@
             // label2
             // 
             label2.AutoSize=true;
-            label2.Location=new Point(17, 57);
+            label2.Location=new Point(13, 57);
             label2.Name="label2";
             label2.Size=new Size(61, 15);
             label2.TabIndex=2;
@@ -82,7 +83,7 @@
             // label3
             // 
             label3.AutoSize=true;
-            label3.Location=new Point(12, 117);
+            label3.Location=new Point(12, 118);
             label3.Name="label3";
             label3.Size=new Size(62, 15);
             label3.TabIndex=3;
@@ -91,7 +92,7 @@
             // label4
             // 
             label4.AutoSize=true;
-            label4.Location=new Point(12, 173);
+            label4.Location=new Point(42, 147);
             label4.Name="label4";
             label4.Size=new Size(32, 15);
             label4.TabIndex=4;
@@ -100,7 +101,7 @@
             // label5
             // 
             label5.AutoSize=true;
-            label5.Location=new Point(12, 325);
+            label5.Location=new Point(39, 325);
             label5.Name="label5";
             label5.Size=new Size(41, 15);
             label5.TabIndex=5;
@@ -109,7 +110,7 @@
             // label6
             // 
             label6.AutoSize=true;
-            label6.Location=new Point(12, 354);
+            label6.Location=new Point(7, 354);
             label6.Name="label6";
             label6.Size=new Size(73, 15);
             label6.TabIndex=6;
@@ -118,7 +119,7 @@
             // label7
             // 
             label7.AutoSize=true;
-            label7.Location=new Point(12, 383);
+            label7.Location=new Point(23, 383);
             label7.Name="label7";
             label7.Size=new Size(57, 15);
             label7.TabIndex=7;
@@ -136,7 +137,7 @@
             // label9
             // 
             label9.AutoSize=true;
-            label9.Location=new Point(12, 267);
+            label9.Location=new Point(28, 267);
             label9.Name="label9";
             label9.Size=new Size(52, 15);
             label9.TabIndex=9;
@@ -147,13 +148,12 @@
             _charBiography.Location=new Point(84, 57);
             _charBiography.Multiline=true;
             _charBiography.Name="_charBiography";
+            _charBiography.PlaceholderText="Optional";
             _charBiography.Size=new Size(231, 48);
             _charBiography.TabIndex=10;
             // 
             // _charProfession
             // 
-            _charProfession.DropDownStyle=ComboBoxStyle.DropDownList;
-            _charProfession.FormattingEnabled=true;
             _charProfession.Items.AddRange(new object[] { "Fighter", "Hunter", "Priest", "Rogue", "Wizard" });
             _charProfession.Location=new Point(84, 118);
             _charProfession.Name="_charProfession";
@@ -163,12 +163,10 @@
             // 
             // _charRace
             // 
-            _charRace.DropDownStyle=ComboBoxStyle.DropDownList;
-            _charRace.FormattingEnabled=true;
             _charRace.Items.AddRange(new object[] { "Dwarf", "Elf", "Gnome", "Half Elf", "Human" });
-            _charRace.Location=new Point(86, 173);
+            _charRace.Location=new Point(84, 147);
             _charRace.Name="_charRace";
-            _charRace.Size=new Size(229, 23);
+            _charRace.Size=new Size(231, 23);
             _charRace.TabIndex=12;
             _charRace.Validating+=OnValidateRace;
             // 
@@ -176,37 +174,46 @@
             // 
             _charStrength.Location=new Point(86, 267);
             _charStrength.Name="_charStrength";
+            _charStrength.PlaceholderText="1-100";
             _charStrength.Size=new Size(100, 23);
             _charStrength.TabIndex=13;
             _charStrength.Validating+=OnValidateStrength;
             // 
-            // _charIntelligence
-            // 
-            _charIntelligence.Location=new Point(86, 325);
-            _charIntelligence.Name="_charIntelligence";
-            _charIntelligence.Size=new Size(100, 23);
-            _charIntelligence.TabIndex=14;
-            // 
             // _charAgility
             // 
-            _charAgility.Location=new Point(86, 296);
+            _charAgility.Location=new Point(86, 325);
             _charAgility.Name="_charAgility";
+            _charAgility.PlaceholderText="1-100";
             _charAgility.Size=new Size(100, 23);
             _charAgility.TabIndex=15;
+            _charAgility.Validating+=OnValidateAgility;
+            // 
+            // _charIntelligence
+            // 
+            _charIntelligence.Location=new Point(86, 296);
+            _charIntelligence.Name="_charIntelligence";
+            _charIntelligence.PlaceholderText="1-100";
+            _charIntelligence.Size=new Size(100, 23);
+            _charIntelligence.TabIndex=14;
+            _charIntelligence.Validating+=OnValidateIntelligence;
             // 
             // _charConstitution
             // 
             _charConstitution.Location=new Point(86, 354);
             _charConstitution.Name="_charConstitution";
+            _charConstitution.PlaceholderText="1-100";
             _charConstitution.Size=new Size(100, 23);
             _charConstitution.TabIndex=16;
+            _charConstitution.Validating+=OnValidateConstitution;
             // 
             // _charCharisma
             // 
             _charCharisma.Location=new Point(86, 383);
             _charCharisma.Name="_charCharisma";
+            _charCharisma.PlaceholderText="1-100";
             _charCharisma.Size=new Size(100, 23);
             _charCharisma.TabIndex=17;
+            _charCharisma.Validating+=OnValidateCharisma;
             // 
             // _btnSave
             // 
@@ -222,6 +229,8 @@
             // 
             // _btnCancel
             // 
+            _btnCancel.CausesValidation=false;
+            _btnCancel.DialogResult=DialogResult.Cancel;
             _btnCancel.Location=new Point(682, 406);
             _btnCancel.Name="_btnCancel";
             _btnCancel.Size=new Size(75, 23);
@@ -236,17 +245,21 @@
             // 
             // CharacterForm
             // 
+            AcceptButton=_btnSave;
             AutoScaleDimensions=new SizeF(7F, 15F);
             AutoScaleMode=AutoScaleMode.Font;
+            AutoValidate=AutoValidate.EnableAllowFocusChange;
+            CancelButton=_btnCancel;
             ClientSize=new Size(800, 450);
             Controls.Add(_btnCancel);
             Controls.Add(_btnSave);
+            Controls.Add(_charName);
+            Controls.Add(_charRace);
             Controls.Add(_charCharisma);
             Controls.Add(_charConstitution);
-            Controls.Add(_charAgility);
             Controls.Add(_charIntelligence);
+            Controls.Add(_charAgility);
             Controls.Add(_charStrength);
-            Controls.Add(_charRace);
             Controls.Add(_charProfession);
             Controls.Add(_charBiography);
             Controls.Add(label9);
@@ -258,8 +271,11 @@
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(_charName);
+            MaximizeBox=false;
+            MinimizeBox=false;
             Name="CharacterForm";
+            ShowIcon=false;
+            StartPosition=FormStartPosition.CenterParent;
             Text="Create New Character";
             ((System.ComponentModel.ISupportInitialize)_errors).EndInit();
             ResumeLayout(false);
@@ -282,8 +298,8 @@
         private ComboBox _charProfession;
         private ComboBox _charRace;
         private TextBox _charStrength;
-        private TextBox _charIntelligence;
         private TextBox _charAgility;
+        private TextBox _charIntelligence;
         private TextBox _charConstitution;
         private TextBox _charCharisma;
         private Button _btnSave;

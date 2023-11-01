@@ -39,25 +39,41 @@ public class Character : IValidatableObject
     public string Name {
 
         get { return _name ?? ""; }
-        set { _name = value?.Trim() ?? ""; }
+        set { _name = value.Trim() ?? ""; }
     }
 
-    /// <summary>
+   /* /// <summary>
     /// Gets and sets the profession of character. Possible professions are Fighter, Hunter, Priest, Rogue, and Wizard.
     /// </summary>
-    public string Profession { get; set; }
+    public string Profession {
+        get { return _profession ?? ""; }
+        set {
+            _profession = value?.Trim() ?? "";
+        }
+    }
 
     /// <summary>
     /// Gets and sets the race of character. Possible races are Dwarf, Elf, Gnome, Half Elf, and Human.
     /// </summary>
-    public string Race { get; set; }
+    public string Race {
+        get { return _race ?? ""; }
+        set {
+            _race = value?.Trim() ?? "";
+        }
+    }
+   */
 
+    public string Profession { get; set; }
+
+    public string Race { get; set; }
     /// <summary>
     /// Gets and sets the biography of character.
     /// </summary>
     public string Biography {
         get { return _biography ?? ""; }
-        set { _biography = value; }
+        set { 
+            _biography = value.Trim() ?? "";
+        }
     }
 
 
@@ -96,15 +112,11 @@ public class Character : IValidatableObject
     //Fields - data
 
     private string _name;
-    private string _profession;
-    private string _race;
+    //private string _profession;
+    //private string _race;
     private string _biography;
 
-    private int _strength;
-    private int _intelligence;
-    private int _agility;
-    private int _constitution;
-    private int _charisma;
+
 
     /// <summary>Gets the maximum attribute value.</summary>
     public const int MaximumAttributeValue = 100;
@@ -139,43 +151,43 @@ public class Character : IValidatableObject
             return false;
         }
 
-        if (!ValidateProfession(_profession))
+        if (!ValidateProfession(Profession))
         {
             message = "Profession is invalid. Profession must be one of the following: Fighter, Hunter, Priest, Rogue, Wizard";
             return false;
         }
 
-        if (!ValidateRace(_race))
+        if (!ValidateRace(Race))
         {
             message = "Race value is invalid. Race value must be one of the following: Dwarf, Elf, Gnome, Half Elf, Human";
             return false;
         }
 
-        if (!CheckAttributeRange(_strength))
+        if (!CheckAttributeRange(Strength))
         {
             message = CreateAttributeWarning("strength");
             return false;
         }
 
-        if (!CheckAttributeRange(_intelligence))
+        if (!CheckAttributeRange(Intelligence))
         {
             message = CreateAttributeWarning("intelligence");
             return false;
         }
 
-        if (!CheckAttributeRange(_agility))
+        if (!CheckAttributeRange(Agility))
         {
             message = CreateAttributeWarning("agility");
             return false;
         }
 
-        if (!CheckAttributeRange(_constitution))
+        if (!CheckAttributeRange(Constitution))
         {
             message = CreateAttributeWarning("constitution");
             return false;
         }
 
-        if (!CheckAttributeRange(_charisma))
+        if (!CheckAttributeRange(Charisma))
         {
             message = CreateAttributeWarning("charisma");
             return false;
@@ -244,15 +256,15 @@ public class Character : IValidatableObject
     /// <returns>true if in between valid range and false if outside valid range.</returns>
     private bool CheckAttributeRange (int attribute)
     {
-        if(attribute >= MinimumAttributeValue && attribute <= MaximumAttributeValue) 
-            return true;
+        return (attribute >= MinimumAttributeValue && attribute <= MaximumAttributeValue);
+            
 
-        return false;
+    
     }
 
     public override string ToString ()
     {
-        return $"Name: {Name}  Profession: {Profession}  Race: {Race})";
+        return $"Name: {Name}  Profession: {Profession}  Race: {Race} Biography: {Biography}     Strength: {Strength}    Intelligence: {Intelligence}    Agility: {Agility}    Constitution: {Constitution}    Charisma: {Charisma})";
     }
 
     public IEnumerable<ValidationResult> Validate ( ValidationContext validationContext )
