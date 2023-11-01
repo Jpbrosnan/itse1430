@@ -8,135 +8,134 @@
 
 using Microsoft.VisualBasic.Devices;
 
-namespace JonathanBrosnan.AdventureGame.WinHost
+namespace JonathanBrosnan.AdventureGame.WinHost;
+
+/// <summary>
+/// Form used for the main startup screen of the program.
+/// </summary>
+public partial class MainForm : Form
 {
-    /// <summary>
-    /// Form used for the main startup screen of the program.
-    /// </summary>
-    public partial class MainForm : Form
+    public MainForm ()
     {
-        public MainForm ()
+        InitializeComponent();
+    }
+
+    protected override void OnLoad ( EventArgs e )
+    {
+        base.OnLoad(e);
+
+        RefreshCharacters();
+    }
+
+    protected override void OnFormClosing ( FormClosingEventArgs e )
+    {
+        if (!Confirm("Confirmation", "Do you really want to exit?"))
         {
-            InitializeComponent();
+            e.Cancel = true;
+            return;
         }
+        base.OnFormClosing(e);
+    }
 
-        protected override void OnLoad ( EventArgs e )
+    #region Event Handlers
+    private void OnNewCharacter ( object sender, EventArgs e )
+    {
+        var item = new CharacterForm();
+
+        do
         {
-            base.OnLoad(e);
-
-            RefreshCharacters();
-        }
-
-        protected override void OnFormClosing ( FormClosingEventArgs e )
-        {
-            if (!Confirm("Confirmation", "Do you really want to exit?"))
-            {
-                e.Cancel = true;
-                return;
-            }
-            base.OnFormClosing(e);
-        }
-
-        #region Event Handlers
-        private void OnNewCharacter ( object sender, EventArgs e )
-        {
-            var item = new CharacterForm();
-
-            do
-            {
-                if (item.ShowDialog(this) != DialogResult.OK)
-                    return;
-
-                //Add movie to library         
-                var error = _database.Add(item.Character);
-                if (String.IsNullOrEmpty(error))
-                    break;
-                MessageBox.Show(this, error, "Add Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            } while (true);
-
-            RefreshCharacters();
-        }
-
-        private void OnEditCharacter ( object sender, EventArgs e )
-        {
-            var character = GetSelectedCharacter();
-            if (character == null)
-            {
-                MessageBox.Show(this, "No characters to edit!", "Edit Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            var item = new CharacterForm();
-            item.Text = "Edit Character";
-            item.Character = character;
-
-            do
-            {
-                if (item.ShowDialog(this) != DialogResult.OK)
-                    return;
-
-                //Edit movie in library
-                var error = _database.Update(character.Id, item.Character);
-                if (String.IsNullOrEmpty(error))
-                    break;
-                MessageBox.Show(this, error, "Updated Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            } while (true);
-
-            RefreshCharacters();
-        }
-
-        private void OnDeleteCharacter ( object sender, EventArgs e )
-        {
-            var character = GetSelectedCharacter();
-            if (character == null)
-            {
-                MessageBox.Show(this, "No characters to delete!", "Delete Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (!Confirm("Delete", $"Are you sure you want to delete '{character.Name}'?"))
+            if (item.ShowDialog(this) != DialogResult.OK)
                 return;
 
-            //Delete movie
-            _database.Delete(character.Id);
-            RefreshCharacters();
-        }
+            //Add movie to library         
+            var error = _database.Add(item.Character);
+            if (String.IsNullOrEmpty(error))
+                break;
+            MessageBox.Show(this, error, "Add Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        } while (true);
 
+        RefreshCharacters();
+    }
 
-        private void OnHelpAbout ( object sender, EventArgs e )
+    private void OnEditCharacter ( object sender, EventArgs e )
+    {
+        var character = GetSelectedCharacter();
+        if (character == null)
         {
-            var about = new AboutBox();
-            about.ShowDialog(this);
+            MessageBox.Show(this, "No characters to edit!", "Edit Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
         }
-        private void OnFileExit ( object sender, EventArgs e )
+        var item = new CharacterForm();
+        item.Text = "Edit Character";
+        item.Character = character;
+
+        do
         {
-            Close();
-        }
+            if (item.ShowDialog(this) != DialogResult.OK)
+                return;
 
-        #endregion
+            //Edit movie in library
+            var error = _database.Update(character.Id, item.Character);
+            if (String.IsNullOrEmpty(error))
+                break;
+            MessageBox.Show(this, error, "Updated Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        } while (true);
 
-        #region Private Members
+        RefreshCharacters();
+    }
 
-        private bool Confirm ( string title, string message )
+    private void OnDeleteCharacter ( object sender, EventArgs e )
+    {
+        var character = GetSelectedCharacter();
+        if (character == null)
         {
-            return MessageBox.Show(this, message, title, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
+            MessageBox.Show(this, "No characters to delete!", "Delete Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
         }
+        if (!Confirm("Delete", $"Are you sure you want to delete '{character.Name}'?"))
+            return;
 
-        private Character GetSelectedCharacter ()
-        {
-            return _lstCharacters.SelectedItem as Character;
-        }
+        //Delete movie
+        _database.Delete(character.Id);
+        RefreshCharacters();
+    }
 
-        private void RefreshCharacters ()
-        {
-            _lstCharacters.DataSource = null;
 
-            var characters = _database.GetAll();
+    private void OnHelpAbout ( object sender, EventArgs e )
+    {
+        var about = new AboutBox();
+        about.ShowDialog(this);
+    }
+    private void OnFileExit ( object sender, EventArgs e )
+    {
+        Close();
+    }
 
-            _lstCharacters.DataSource = characters;
+    #endregion
 
-        }
+    #region Private Members
 
-        private CharacterDatabase _database = new CharacterDatabase();
-        #endregion
+    private bool Confirm ( string title, string message )
+    {
+        return MessageBox.Show(this, message, title, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
+    }
+
+    private Character GetSelectedCharacter ()
+    {
+        return _lstCharacters.SelectedItem as Character;
+    }
+
+    private void RefreshCharacters ()
+    {
+        _lstCharacters.DataSource = null;
+
+        var characters = _database.GetAll();
+
+        _lstCharacters.DataSource = characters;
 
     }
+
+    private CharacterDatabase _database = new CharacterDatabase();
+    #endregion
+
 }
