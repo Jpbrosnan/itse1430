@@ -1,4 +1,12 @@
-﻿namespace JonathanBrosnan.AdventureGame.WinHost
+﻿/*
+ * ITSE 1430
+ * Adventure Game
+ * Name: Jonathan Brosnan
+ * Lab 3 Final
+ * 10/31/2023
+ */
+
+namespace JonathanBrosnan.AdventureGame.WinHost
 {
     partial class MainForm
     {
@@ -60,7 +68,7 @@
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name="exitToolStripMenuItem";
-            exitToolStripMenuItem.Size=new Size(180, 22);
+            exitToolStripMenuItem.Size=new Size(93, 22);
             exitToolStripMenuItem.Text="Exit";
             exitToolStripMenuItem.Click+=OnFileExit;
             // 
@@ -114,6 +122,8 @@
             // 
             _lstCharacters.Dock=DockStyle.Fill;
             _lstCharacters.FormattingEnabled=true;
+            _lstCharacters.HorizontalExtent=2;
+            _lstCharacters.HorizontalScrollbar=true;
             _lstCharacters.ItemHeight=15;
             _lstCharacters.Location=new Point(0, 24);
             _lstCharacters.Name="_lstCharacters";
@@ -124,6 +134,7 @@
             // 
             AutoScaleDimensions=new SizeF(7F, 15F);
             AutoScaleMode=AutoScaleMode.Font;
+            AutoSize=true;
             ClientSize=new Size(800, 600);
             Controls.Add(_lstCharacters);
             Controls.Add(_mainMenu);

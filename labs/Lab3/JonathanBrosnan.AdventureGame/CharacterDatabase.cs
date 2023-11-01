@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*
+ * ITSE 1430
+ * Adventure Game
+ * Name: Jonathan Brosnan
+ * Lab 3 Final
+ * 10/31/2023
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,40 +14,22 @@ using System.Threading.Tasks;
 
 namespace JonathanBrosnan.AdventureGame
 {
+    /// <summary>
+    /// Represents a database of characters.
+    /// </summary>
     public class CharacterDatabase
     {
-        
-
-
+        /// <summary>
+        /// Initializes an instance of the CharacterDatabase class with 3 preloaded characters.
+        /// </summary>
         public CharacterDatabase ()
         {
-            //Object initializer - replaces need for creating an object (expression) and then assigning values to properties (statements)
-            // object-initializer ::= new T() { property-assignment+ }
-            // property-assignment ::= id = Et,
-            //var movie = new Movie();
-            //movie.Id = _id++;
-            //movie.Title = "Jaws";
-            //movie.ReleaseYear = 1977;
-            //movie.Rating = Rating.PG;
-            //movie.RunLength = 120;
-            //_movies[0] = movie;
-            //_movies[0] = new Movie() {
-            //    Id = _id++,
-            //    Title = "Jaws",
-            //    ReleaseYear = 1977,
-            //    Rating = Rating.PG,
-            //    RunLength = 120,
-            //};
-
-            //Collection initializer syntax
-            // new T[] { E, E, E }
-            //Set up movies
             var characters = new[] {
                     new Character() {
                         Name = "Luke",
                         Profession = "Hunter",
                         Race = "Dwarf",
-                        Biography = "Cool Guy",
+                        Biography = "Nice Guy",
                         Strength = 40,
                         Intelligence = 40,
                         Agility = 40,
@@ -50,7 +40,7 @@ namespace JonathanBrosnan.AdventureGame
                         Name = "Jake",
                         Profession = "Priest",
                         Race = "Gnome",
-                        Biography = "Bad Guy",
+                        Biography = "Good Guy",
                         Strength = 50,
                         Intelligence = 50,
                         Agility = 50,
@@ -58,10 +48,9 @@ namespace JonathanBrosnan.AdventureGame
                         Charisma = 50,
                     },
                     new Character() {
-                        Name = "Jon",
+                        Name = "Lilli",
                         Profession = "Fighter",
                         Race = "Elf",
-                        Biography = "Cool Guy",
                         Strength = 2,
                         Intelligence = 2,
                         Agility = 100,
@@ -70,16 +59,21 @@ namespace JonathanBrosnan.AdventureGame
                     },
                 };
 
-            //Enumeration - use foreach
-            // foreach-statement ::= foreach (T id in array) S;
-            // 1. variant is readonly
-            // 2. array must be immutable while enumerating
-            //for (int index = 0; index < movies.Length; ++index)
-            //   Add(movies[index]);
             foreach (var character in characters)
                 Add(character);
             
         }
+
+        #region Public Database Handlers
+
+        /// <summary>Adds a character to the database.</summary>
+        /// <param name="character">The character to add.</param>
+        /// <returns>Empty string if successful or an error message otherwise.</returns>
+        /// <remarks>
+        /// Character cannot be null.
+        /// Character must be valid.
+        /// Character name must be unique.
+        /// </remarks>
         public string Add ( Character character )
         {
             //Validate: null, invalid character
@@ -89,22 +83,30 @@ namespace JonathanBrosnan.AdventureGame
                 return error;
            
 
-            //Title must be unique
+            //Name must be unique
             var existing = FindByName(character.Name);
             if (existing != null)
-                return "Character Name must be unique";
+                return "Character name must be unique";
 
             character.Id = _id++;
             _characters.Add(Clone(character));
             return "";
             
         }
+
+        /// <summary>Deletes a character from the database.</summary>
+        /// <param name="id">ID of the character to delete.</param>
         public void Delete ( int id )
         {
-            var character = FindById(id);
-            if (character != null)
-                _characters.Remove(character);  //Reference equality applies
+            if (id > 0)
+            {
+                var character = FindById(id);
+                if (character != null)
+                    _characters.Remove(character);  //Reference equality applies
+            }
         }
+
+
         /// <summary>Gets all the characters in the database.</summary>
         /// <returns>The list of character.</returns>
         public List<Character> GetAll ()
@@ -114,9 +116,21 @@ namespace JonathanBrosnan.AdventureGame
                 items.Add(Clone(character));
             return items;
         }
+
+        /// <summary>Updates a character in the database.</summary>
+        /// <param name="id">ID of the character to update.</param>
+        /// <param name="character">The updated character information.</param>
+        /// <returns>Empty string if successful or an error message otherwise.</returns>
+        /// <remarks>
+        /// Id must be > 0.
+        /// Character cannot be null.
+        /// Character must be valid.
+        /// Character must exist.
+        /// Character title must be unique.
+        /// </remarks>
         public string Update ( int id, Character character )
         {
-            //Validate: null, invalid movie
+            //Validate: null, invalid character
             if (id <= 0)
                 return "ID is invalid";
 
@@ -139,6 +153,10 @@ namespace JonathanBrosnan.AdventureGame
             Copy(existing, character);
             return "";
         }
+
+        #endregion
+
+        #region Private Members
         private Character Clone ( Character character )
         {
             var item = new Character() { Id = character.Id };
@@ -148,7 +166,7 @@ namespace JonathanBrosnan.AdventureGame
         }
         private void Copy ( Character target, Character source )
         {
-            //Don't copy Id
+            
             target.Name = source.Name;
             target.Biography = source.Biography;
             target.Profession = source.Profession;
@@ -182,5 +200,7 @@ namespace JonathanBrosnan.AdventureGame
 
         private readonly List<Character> _characters = new List<Character>();
         private int _id = 1;
+
+        #endregion
     }
 }

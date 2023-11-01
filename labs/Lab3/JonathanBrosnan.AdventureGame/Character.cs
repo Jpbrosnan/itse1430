@@ -1,37 +1,25 @@
-﻿using System;
+﻿/*
+ * ITSE 1430
+ * Adventure Game
+ * Name: Jonathan Brosnan
+ * Lab 3 Final
+ * 10/31/2023
+ */
+
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 
 namespace JonathanBrosnan.AdventureGame;
+
 /// <summary>
 /// Represents a character. Name, profession and race are required fields for a valid character.
 /// </summary>
 public class Character
 {
-    /*
-    /// <summary>Initializes the Movie class.</summary>
-    public Character ()
-    {
-    }
-    
-    /// <summary>Initializes the Movie class.</summary>
-    /// <param name="id">Identifier of the movie.</param>
-    public Character ( int id ) : this(id, "")
-    {
-    }
 
-    public Character ( string name ) : this(0, name)
-    {
-    }
-    
-
-    public Character ( int id, string name )
-    {
-        Id = id;
-        Name = name;
-    }
-    */
-
+    #region Main Properties
+    /// <summary>Gets or sets the unique identifier of the character.</summary>
     public int Id { get; set; }
 
     /// <summary>
@@ -43,44 +31,23 @@ public class Character
         set { _name = value.Trim() ?? ""; }
     }
 
-   /* /// <summary>
-    /// Gets and sets the profession of character. Possible professions are Fighter, Hunter, Priest, Rogue, and Wizard.
-    /// </summary>
-    public string Profession {
-        get { return _profession ?? ""; }
-        set {
-            _profession = value?.Trim() ?? "";
-        }
-    }
-
-    /// <summary>
-    /// Gets and sets the race of character. Possible races are Dwarf, Elf, Gnome, Half Elf, and Human.
-    /// </summary>
-    public string Race {
-        get { return _race ?? ""; }
-        set {
-            _race = value?.Trim() ?? "";
-        }
-    }
-   */
-
+    /// <summary>Gets or sets the profession.</summary>
     public string Profession { get; set; }
 
+    /// <summary>Gets or sets the race.</summary>
     public string Race { get; set; }
+
     /// <summary>
     /// Gets and sets the biography of character.
     /// </summary>
     public string Biography {
         get { return _biography ?? ""; }
-        set { 
-            _biography = value.Trim() ?? "";
-        }
+        set { _biography = value.Trim() ?? ""; }
     }
+    #endregion
 
 
-    //Attributes
-
-
+    #region Attribute Properties
 
     /// <summary>
     /// Gets and sets the strength attribute.
@@ -106,25 +73,14 @@ public class Character
     /// </summary>
     public int Charisma { get; set; }
 
+    #endregion
 
-
- 
-
-    //Fields - data
-
-    private string _name;
-    //private string _profession;
-    //private string _race;
-    private string _biography;
-
-
-
+    #region Public Members
     /// <summary>Gets the maximum attribute value.</summary>
     public const int MaximumAttributeValue = 100;
 
     /// <summary>Gets the minimum attribute value.</summary>
     public const int MinimumAttributeValue = 1;
-
 
     /// <summary>
     /// Validates the character instance.
@@ -199,6 +155,26 @@ public class Character
     }
 
     /// <summary>
+    /// Overrides the ToString() for the Character class.
+    /// </summary>
+    /// <returns>Formatted string with Character data.</returns>
+    public override string ToString ()
+    {
+        if (!String.IsNullOrEmpty(Biography))
+            return $"Name: {Name}  |  Profession: {Profession}  |  Race: {Race}  |  Biography: {Biography}  |  Str: {Strength}  |  Int: {Intelligence}  |  Agi: {Agility}  |  Con: {Constitution}  |  Cha: {Charisma}  |";
+        else
+            return $"Name: {Name}  |  Profession: {Profession}  |  Race: {Race}  |  Str: {Strength}  |  Int: {Intelligence}  |  Agi: {Agility}  |  Con: {Constitution}  |  Cha: {Charisma}  |";
+    }
+
+    #endregion
+
+    #region Private Members
+
+    //Fields - data
+    private string _name;
+    private string _biography;
+
+    /// <summary>
     /// Validates race value
     /// </summary>
     /// <param name="race">String race value.</param>
@@ -260,12 +236,10 @@ public class Character
         return (attribute >= MinimumAttributeValue && attribute <= MaximumAttributeValue);
 
     }
+    #endregion
 
-    public override string ToString ()
-    {
-        return $"Name: {Name}  Profession: {Profession}  Race: {Race} Biography: {Biography}     Strength: {Strength}    Intelligence: {Intelligence}    Agility: {Agility}    Constitution: {Constitution}    Charisma: {Charisma})";
-    }
+
     
     
-    }
+}
 

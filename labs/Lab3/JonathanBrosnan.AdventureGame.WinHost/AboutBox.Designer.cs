@@ -1,4 +1,12 @@
-﻿namespace JonathanBrosnan.AdventureGame.WinHost
+﻿/*
+ * ITSE 1430
+ * Adventure Game
+ * Name: Jonathan Brosnan
+ * Lab 3 Final
+ * 10/31/2023
+ */
+
+namespace JonathanBrosnan.AdventureGame.WinHost
 {
     partial class AboutBox
     {

@@ -1,13 +1,25 @@
+/*
+ * ITSE 1430
+ * Adventure Game
+ * Name: Jonathan Brosnan
+ * Lab 3 Final
+ * 10/31/2023
+ */
+
 using Microsoft.VisualBasic.Devices;
 
 namespace JonathanBrosnan.AdventureGame.WinHost
-{
+{   
+    /// <summary>
+    /// Form used for the main startup screen of the program.
+    /// </summary>
     public partial class MainForm : Form
     {
         public MainForm ()
         {
             InitializeComponent();
         }
+
         protected override void OnLoad ( EventArgs e )
         {
             base.OnLoad(e);
@@ -15,6 +27,17 @@ namespace JonathanBrosnan.AdventureGame.WinHost
             RefreshCharacters();
         }
 
+        protected override void OnFormClosing ( FormClosingEventArgs e )
+        {
+            if (!Confirm("Confirmation", "Do you really want to exit?"))
+            {
+                e.Cancel = true;
+                return;
+            }
+            base.OnFormClosing(e);
+        }
+
+        #region Event Handlers
         private void OnNewCharacter ( object sender, EventArgs e )
         {
             var item = new CharacterForm();
@@ -76,15 +99,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
             _database.Delete(character.Id);
             RefreshCharacters();
         }
-        protected override void OnFormClosing ( FormClosingEventArgs e )
-        {
-            if (!Confirm("Confirmation", "Do you really want to exit?"))
-            {
-                e.Cancel = true;
-                return;
-            }
-            base.OnFormClosing(e);
-        }
+    
 
         private void OnHelpAbout ( object sender, EventArgs e )
         {
@@ -95,6 +110,11 @@ namespace JonathanBrosnan.AdventureGame.WinHost
         {
             Close();
         }
+
+        #endregion
+
+        #region Private Members
+
         private bool Confirm ( string title, string message )
         {
             return MessageBox.Show(this, message, title, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes;
@@ -116,7 +136,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
         }
 
         private CharacterDatabase _database = new CharacterDatabase();
-
+        #endregion
 
     }
 }
