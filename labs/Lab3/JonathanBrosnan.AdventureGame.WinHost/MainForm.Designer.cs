@@ -76,21 +76,21 @@
             addToolStripMenuItem.Name="addToolStripMenuItem";
             addToolStripMenuItem.Size=new Size(180, 22);
             addToolStripMenuItem.Text="New";
-            this.addToolStripMenuItem.Click += new System.EventHandler(this.OnNewMovie);
+            this.addToolStripMenuItem.Click += new System.EventHandler(this.OnNewCharacter);
             // 
             // editToolStripMenuItem
             // 
             editToolStripMenuItem.Name="editToolStripMenuItem";
             editToolStripMenuItem.Size=new Size(180, 22);
             editToolStripMenuItem.Text="Edit";
-            this.editToolStripMenuItem.Click += new System.EventHandler(this.OnEditMovie);
+            this.editToolStripMenuItem.Click += new System.EventHandler(this.OnEditCharacter);
             // 
             // deleteToolStripMenuItem
             // 
             deleteToolStripMenuItem.Name="deleteToolStripMenuItem";
             deleteToolStripMenuItem.Size=new Size(180, 22);
             deleteToolStripMenuItem.Text="Delete";
-            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.OnDeleteMovie);
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.OnDeleteCharacter);
             // 
             // helpToolStripMenuItem
             // 

@@ -6,7 +6,7 @@ namespace JonathanBrosnan.AdventureGame;
 /// <summary>
 /// Represents a character. Name, profession and race are required fields for a valid character.
 /// </summary>
-public class Character : IValidatableObject
+public class Character
 {
 
     /// <summary>Initializes the Movie class.</summary>
@@ -145,7 +145,7 @@ public class Character : IValidatableObject
     public bool TryValidate(out string message)
     {
 
-        if (String.IsNullOrEmpty(_name))
+        if (String.IsNullOrEmpty(Name))
         {
             message = "Name is required";
             return false;
@@ -193,7 +193,7 @@ public class Character : IValidatableObject
             return false;
         }
 
-        message = "";
+        message = "Test";
         return true;
     }
 
@@ -257,25 +257,24 @@ public class Character : IValidatableObject
     private bool CheckAttributeRange (int attribute)
     {
         return (attribute >= MinimumAttributeValue && attribute <= MaximumAttributeValue);
-            
 
-    
     }
 
     public override string ToString ()
     {
         return $"Name: {Name}  Profession: {Profession}  Race: {Race} Biography: {Biography}     Strength: {Strength}    Intelligence: {Intelligence}    Agility: {Agility}    Constitution: {Constitution}    Charisma: {Charisma})";
     }
-
+    
     public IEnumerable<ValidationResult> Validate ( ValidationContext validationContext )
     {
 
-        if (String.IsNullOrEmpty(_name))
+        if (String.IsNullOrEmpty(Name))
         {
             yield return new ValidationResult("Name is required");
         }
+
         /*
-        if (!ValidateProfession(_profession))
+        if (!ValidateProfession(Profession))
         {
             message = "Profession is invalid. Profession must be one of the following: Fighter, Hunter, Priest, Rogue, Wizard";
             return false;
@@ -316,7 +315,7 @@ public class Character : IValidatableObject
             message = CreateAttributeWarning("charisma");
             return false;
         }
-        */
+     */   
     }
-}
+    }
 

@@ -15,7 +15,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
             RefreshCharacters();
         }
 
-        private void OnNewMovie ( object sender, EventArgs e )
+        private void OnNewCharacter ( object sender, EventArgs e )
         {
             var item = new CharacterForm();
 
@@ -34,7 +34,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
             RefreshCharacters();
         }
 
-        private void OnEditMovie ( object sender, EventArgs e )
+        private void OnEditCharacter ( object sender, EventArgs e )
         {
             var character = GetSelectedCharacter();
             if (character == null)
@@ -59,7 +59,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
             RefreshCharacters();
         }
 
-        private void OnDeleteMovie ( object sender, EventArgs e )
+        private void OnDeleteCharacter ( object sender, EventArgs e )
         {
             var character = GetSelectedCharacter();
             if (character == null)

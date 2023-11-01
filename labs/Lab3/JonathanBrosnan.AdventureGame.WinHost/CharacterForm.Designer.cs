@@ -154,15 +154,20 @@
             // 
             // _charProfession
             // 
+            _charProfession.DropDownStyle=ComboBoxStyle.DropDownList;
+            _charProfession.FormattingEnabled=true;
             _charProfession.Items.AddRange(new object[] { "Fighter", "Hunter", "Priest", "Rogue", "Wizard" });
             _charProfession.Location=new Point(84, 118);
             _charProfession.Name="_charProfession";
             _charProfession.Size=new Size(231, 23);
             _charProfession.TabIndex=11;
+      
             _charProfession.Validating+=OnValidateProfession;
             // 
             // _charRace
             // 
+            _charRace.DropDownStyle=ComboBoxStyle.DropDownList;
+            _charRace.FormattingEnabled=true;
             _charRace.Items.AddRange(new object[] { "Dwarf", "Elf", "Gnome", "Half Elf", "Human" });
             _charRace.Location=new Point(84, 147);
             _charRace.Name="_charRace";
@@ -224,6 +229,7 @@
             _btnSave.Size=new Size(75, 23);
             _btnSave.TabIndex=18;
             _btnSave.Text="Save";
+            _btnSave.UseCompatibleTextRendering=true;
             _btnSave.UseVisualStyleBackColor=true;
             _btnSave.Click+=OnSave;
             // 

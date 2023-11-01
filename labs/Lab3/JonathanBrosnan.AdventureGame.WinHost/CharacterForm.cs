@@ -43,7 +43,8 @@ namespace JonathanBrosnan.AdventureGame.WinHost
 
             };
 
-            ValidateChildren();
+            //ValidateChildren();
+         
         }
         private void OnSave ( object sender, EventArgs e )
         {
@@ -53,21 +54,21 @@ namespace JonathanBrosnan.AdventureGame.WinHost
                 DialogResult = DialogResult.None;
                 return;
             };
-            var button = sender as Button;
+            //var button = sender as Button;
 
-            var character = new Character();
+            var character = new Character {
+                //Populate from the UI
+                Name = _charName.Text,
+                Biography = _charBiography.Text,
+                Profession = _charProfession.Text,
+                Race = _charRace.Text,
 
-            //Populate from the UI
-            character.Name = _charName.Text;
-            character.Biography = _charBiography.Text;
-            character.Profession = _charProfession.Text;
-            character.Race = _charRace.Text;
-
-            character.Strength = GetInt32(_charStrength, 0);
-            character.Intelligence = GetInt32(_charIntelligence, 0);
-            character.Agility = GetInt32(_charAgility, 0);
-            character.Constitution = GetInt32(_charConstitution, 0);
-            character.Charisma = GetInt32(_charCharisma, 0);
+                Strength = GetInt32(_charStrength, 0),
+                Intelligence = GetInt32(_charIntelligence, 0),
+                Agility = GetInt32(_charAgility, 0),
+                Constitution = GetInt32(_charConstitution, 0),
+                Charisma = GetInt32(_charCharisma, 0)
+            };
 
 
             if (!character.TryValidate(out var error))
@@ -105,7 +106,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
                 _errors.SetError(_charName, "Name is required");
                 e.Cancel = true;
             } else
-                _errors.SetError(_charName, "");
+                _errors.SetError(_charName, null);
         }
         private void OnValidateRace ( object sender, System.ComponentModel.CancelEventArgs e )
         {
@@ -170,7 +171,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
 
         private void OnValidateConstitution ( object sender, System.ComponentModel.CancelEventArgs e )
         {
-
+            
             var attribute = GetInt32(_charConstitution, 0);
             if (!CheckAttributeRange(attribute))
             {
@@ -202,5 +203,6 @@ namespace JonathanBrosnan.AdventureGame.WinHost
             return (attribute >= Character.MinimumAttributeValue && attribute <= Character.MaximumAttributeValue);
 
         }
+
     }
 }

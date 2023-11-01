@@ -34,7 +34,7 @@ namespace JonathanBrosnan.AdventureGame
             //Collection initializer syntax
             // new T[] { E, E, E }
             //Set up movies
-            /*var characters = new[] {
+            var characters = new[] {
                     new Character() {
                         Name = "Luke",
                         Profession = "Hunter",
@@ -78,14 +78,15 @@ namespace JonathanBrosnan.AdventureGame
             //   Add(movies[index]);
             foreach (var character in characters)
                 Add(character);
-            */
+            
         }
         public string Add ( Character character )
         {
             //Validate: null, invalid character
             if (character == null)
                 return "Character is null";
-           // if (!character.TryValidate(out var error)) return error;
+           if (!character.TryValidate(out var error)) 
+                return error;
            
 
             //Title must be unique
