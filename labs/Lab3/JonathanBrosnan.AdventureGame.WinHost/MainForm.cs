@@ -9,7 +9,7 @@
 using Microsoft.VisualBasic.Devices;
 
 namespace JonathanBrosnan.AdventureGame.WinHost
-{   
+{
     /// <summary>
     /// Form used for the main startup screen of the program.
     /// </summary>
@@ -62,7 +62,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
             var character = GetSelectedCharacter();
             if (character == null)
             {
-                MessageBox.Show(this, "No characters to edit!.", "Edit Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, "No characters to edit!", "Edit Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             var item = new CharacterForm();
@@ -89,7 +89,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
             var character = GetSelectedCharacter();
             if (character == null)
             {
-                MessageBox.Show(this, "No characters to delete!", "Delete Failed");
+                MessageBox.Show(this, "No characters to delete!", "Delete Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (!Confirm("Delete", $"Are you sure you want to delete '{character.Name}'?"))
@@ -99,7 +99,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
             _database.Delete(character.Id);
             RefreshCharacters();
         }
-    
+
 
         private void OnHelpAbout ( object sender, EventArgs e )
         {

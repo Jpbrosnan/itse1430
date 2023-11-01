@@ -6,18 +6,6 @@
  * 10/31/2023
  */
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-using Microsoft.VisualBasic.Devices;
-
 namespace JonathanBrosnan.AdventureGame.WinHost
 {
     /// <summary>
@@ -47,7 +35,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
             //Load movie data, if any
             if (Character != null)
             {
-                Text = "Edit Movie";
+                Text = "Edit Character";
 
                 _charName.Text = Character.Name;
                 _charBiography.Text = Character.Biography;
@@ -89,7 +77,6 @@ namespace JonathanBrosnan.AdventureGame.WinHost
                 Charisma = GetInt32(_charCharisma, 0)
             };
 
-
             if (!character.TryValidate(out var error))
             {
                 MessageBox.Show(this, error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -98,7 +85,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
             };
 
             Character = character;
-           
+            DialogResult = DialogResult.OK;
         }
 
         private void OnCancel ( object sender, EventArgs e )
@@ -118,7 +105,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
                 _errors.SetError(_charName, "Name is required");
                 e.Cancel = true;
             } else
-                _errors.SetError(_charName, null);
+                _errors.SetError(_charName, "");
         }
         private void OnValidateRace ( object sender, System.ComponentModel.CancelEventArgs e )
         {

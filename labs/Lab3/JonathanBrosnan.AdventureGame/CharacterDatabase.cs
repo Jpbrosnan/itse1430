@@ -6,12 +6,6 @@
  * 10/31/2023
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace JonathanBrosnan.AdventureGame
 {
     /// <summary>
@@ -19,9 +13,7 @@ namespace JonathanBrosnan.AdventureGame
     /// </summary>
     public class CharacterDatabase
     {
-        /// <summary>
-        /// Initializes an instance of the CharacterDatabase class with 3 preloaded characters.
-        /// </summary>
+        //Preloading 3 characters into database to make testing and grading easier.
         public CharacterDatabase ()
         {
             var characters = new[] {
@@ -76,13 +68,14 @@ namespace JonathanBrosnan.AdventureGame
         /// </remarks>
         public string Add ( Character character )
         {
-            //Validate: null, invalid character
-            if (character == null)
+           //Validate: null, invalid character
+           if (character == null)
                 return "Character is null";
-           if (!character.TryValidate(out var error)) 
+
+            //Validates with Character validate function
+            if (!character.TryValidate(out var error)) 
                 return error;
            
-
             //Name must be unique
             var existing = FindByName(character.Name);
             if (existing != null)
@@ -102,10 +95,9 @@ namespace JonathanBrosnan.AdventureGame
             {
                 var character = FindById(id);
                 if (character != null)
-                    _characters.Remove(character);  //Reference equality applies
+                    _characters.Remove(character); 
             }
         }
-
 
         /// <summary>Gets all the characters in the database.</summary>
         /// <returns>The list of character.</returns>
@@ -136,6 +128,8 @@ namespace JonathanBrosnan.AdventureGame
 
             if (character == null)
                 return "Character is null";
+
+            //Validates with Character validate function
             if (!character.TryValidate(out var error))
                 return error;
 
@@ -164,6 +158,7 @@ namespace JonathanBrosnan.AdventureGame
 
             return item;
         }
+
         private void Copy ( Character target, Character source )
         {
             

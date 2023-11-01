@@ -120,11 +120,14 @@ namespace JonathanBrosnan.AdventureGame.WinHost
             // 
             // _lstCharacters
             // 
+            _lstCharacters.BorderStyle=BorderStyle.FixedSingle;
             _lstCharacters.Dock=DockStyle.Fill;
+            _lstCharacters.Font=new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             _lstCharacters.FormattingEnabled=true;
-            _lstCharacters.HorizontalExtent=2;
+            _lstCharacters.HorizontalExtent=1;
             _lstCharacters.HorizontalScrollbar=true;
-            _lstCharacters.ItemHeight=15;
+            _lstCharacters.IntegralHeight=false;
+            _lstCharacters.ItemHeight=17;
             _lstCharacters.Location=new Point(0, 24);
             _lstCharacters.Name="_lstCharacters";
             _lstCharacters.Size=new Size(800, 576);
@@ -141,6 +144,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
             MainMenuStrip=_mainMenu;
             MinimumSize=new Size(300, 200);
             Name="MainForm";
+            SizeGripStyle=SizeGripStyle.Show;
             Text="Jonathan Brosnan Adventure Game";
             _mainMenu.ResumeLayout(false);
             _mainMenu.PerformLayout();

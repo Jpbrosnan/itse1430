@@ -6,14 +6,7 @@
  * 10/31/2023
  */
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace JonathanBrosnan.AdventureGame.WinHost
 {
@@ -23,8 +16,8 @@ namespace JonathanBrosnan.AdventureGame.WinHost
         {
             InitializeComponent();
             Text = "About Box";
-            labelProductName.Text = "Jonathan Brosnan Adventure Game";
-            labelCompanyName.Text = "Jonathan Brosnan";
+            labelProductName.Text = "Product: Jonathan Brosnan Adventure Game";
+            labelCompanyName.Text = "Company: Jonathan Brosnan";
             labelVersion.Text = "Version: 1:0:0";
 
         }

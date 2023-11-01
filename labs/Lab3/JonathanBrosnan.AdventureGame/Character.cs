@@ -6,10 +6,6 @@
  * 10/31/2023
  */
 
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Xml.Linq;
-
 namespace JonathanBrosnan.AdventureGame;
 
 /// <summary>
@@ -45,7 +41,6 @@ public class Character
         set { _biography = value.Trim() ?? ""; }
     }
     #endregion
-
 
     #region Attribute Properties
 
@@ -155,15 +150,12 @@ public class Character
     }
 
     /// <summary>
-    /// Overrides the ToString() for the Character class.
+    /// Overrides the ToString() for the Character class. Returns all of character's data except biography.
     /// </summary>
     /// <returns>Formatted string with Character data.</returns>
     public override string ToString ()
     {
-        if (!String.IsNullOrEmpty(Biography))
-            return $"Name: {Name}  |  Profession: {Profession}  |  Race: {Race}  |  Biography: {Biography}  |  Str: {Strength}  |  Int: {Intelligence}  |  Agi: {Agility}  |  Con: {Constitution}  |  Cha: {Charisma}  |";
-        else
-            return $"Name: {Name}  |  Profession: {Profession}  |  Race: {Race}  |  Str: {Strength}  |  Int: {Intelligence}  |  Agi: {Agility}  |  Con: {Constitution}  |  Cha: {Charisma}  |";
+         return $"Name: {Name}  |  Profession: {Profession}  |  Race: {Race}  |  Str: {Strength}  |  Int: {Intelligence}  |  Agi: {Agility}  |  Con: {Constitution}  |  Cha: {Charisma}  |";
     }
 
     #endregion
@@ -237,9 +229,6 @@ public class Character
 
     }
     #endregion
-
-
-    
     
 }
 
