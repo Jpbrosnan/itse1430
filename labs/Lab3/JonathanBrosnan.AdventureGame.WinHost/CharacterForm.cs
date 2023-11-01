@@ -44,7 +44,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
             };
 
             //ValidateChildren();
-         
+
         }
         private void OnSave ( object sender, EventArgs e )
         {
@@ -63,18 +63,17 @@ namespace JonathanBrosnan.AdventureGame.WinHost
                 Profession = _charProfession.Text,
                 Race = _charRace.Text,
 
-                Strength = GetInt32(_charStrength, 0),
-                Intelligence = GetInt32(_charIntelligence, 0),
-                Agility = GetInt32(_charAgility, 0),
-                Constitution = GetInt32(_charConstitution, 0),
-                Charisma = GetInt32(_charCharisma, 0)
+                Strength = GetInt32(_charStrength, 50),
+                Intelligence = GetInt32(_charIntelligence, 50),
+                Agility = GetInt32(_charAgility, 50),
+                Constitution = GetInt32(_charConstitution, 50),
+                Charisma = GetInt32(_charCharisma, 50)
             };
 
 
             if (!character.TryValidate(out var error))
             {
                 MessageBox.Show(this, error, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
                 DialogResult = DialogResult.None;
                 return;
             };
@@ -133,7 +132,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
         private void OnValidateStrength ( object sender, System.ComponentModel.CancelEventArgs e )
         {
 
-            var attribute = GetInt32(_charStrength, 0);
+            var attribute = GetInt32(_charStrength, 50);
             if (!CheckAttributeRange(attribute))
             {
                 //Invalid
@@ -146,7 +145,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
         private void OnValidateIntelligence ( object sender, System.ComponentModel.CancelEventArgs e )
         {
 
-            var attribute = GetInt32(_charIntelligence, 0);
+            var attribute = GetInt32(_charIntelligence, 50);
             if (!CheckAttributeRange(attribute))
             {
                 //Invalid
@@ -159,7 +158,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
         private void OnValidateAgility ( object sender, System.ComponentModel.CancelEventArgs e )
         {
 
-            var attribute = GetInt32(_charAgility, 0);
+            var attribute = GetInt32(_charAgility, 50);
             if (!CheckAttributeRange(attribute))
             {
                 //Invalid
@@ -171,8 +170,8 @@ namespace JonathanBrosnan.AdventureGame.WinHost
 
         private void OnValidateConstitution ( object sender, System.ComponentModel.CancelEventArgs e )
         {
-            
-            var attribute = GetInt32(_charConstitution, 0);
+
+            var attribute = GetInt32(_charConstitution, 50);
             if (!CheckAttributeRange(attribute))
             {
                 //Invalid
@@ -185,7 +184,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
         private void OnValidateCharisma ( object sender, System.ComponentModel.CancelEventArgs e )
         {
 
-            var attribute = GetInt32(_charCharisma, 0);
+            var attribute = GetInt32(_charCharisma, 50);
             if (!CheckAttributeRange(attribute))
             {
                 //Invalid

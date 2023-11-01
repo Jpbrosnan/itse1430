@@ -50,13 +50,15 @@
             _btnSave=new Button();
             _btnCancel=new Button();
             _errors=new ErrorProvider(components);
+            label10=new Label();
+            label11=new Label();
             ((System.ComponentModel.ISupportInitialize)_errors).BeginInit();
             SuspendLayout();
             // 
             // _charName
             // 
             _charName.ForeColor=SystemColors.WindowText;
-            _charName.Location=new Point(84, 23);
+            _charName.Location=new Point(84, 46);
             _charName.Name="_charName";
             _charName.Size=new Size(231, 23);
             _charName.TabIndex=0;
@@ -65,7 +67,7 @@
             // label1
             // 
             label1.AutoSize=true;
-            label1.Location=new Point(35, 23);
+            label1.Location=new Point(35, 46);
             label1.Name="label1";
             label1.Size=new Size(39, 15);
             label1.TabIndex=1;
@@ -74,7 +76,7 @@
             // label2
             // 
             label2.AutoSize=true;
-            label2.Location=new Point(13, 57);
+            label2.Location=new Point(13, 75);
             label2.Name="label2";
             label2.Size=new Size(61, 15);
             label2.TabIndex=2;
@@ -92,7 +94,7 @@
             // label4
             // 
             label4.AutoSize=true;
-            label4.Location=new Point(42, 147);
+            label4.Location=new Point(39, 147);
             label4.Name="label4";
             label4.Size=new Size(32, 15);
             label4.TabIndex=4;
@@ -145,11 +147,11 @@
             // 
             // _charBiography
             // 
-            _charBiography.Location=new Point(84, 57);
+            _charBiography.Location=new Point(84, 75);
             _charBiography.Multiline=true;
             _charBiography.Name="_charBiography";
             _charBiography.PlaceholderText="Optional";
-            _charBiography.Size=new Size(231, 48);
+            _charBiography.Size=new Size(231, 37);
             _charBiography.TabIndex=10;
             // 
             // _charProfession
@@ -161,7 +163,6 @@
             _charProfession.Name="_charProfession";
             _charProfession.Size=new Size(231, 23);
             _charProfession.TabIndex=11;
-      
             _charProfession.Validating+=OnValidateProfession;
             // 
             // _charRace
@@ -182,6 +183,7 @@
             _charStrength.PlaceholderText="1-100";
             _charStrength.Size=new Size(100, 23);
             _charStrength.TabIndex=13;
+            _charStrength.Text="50";
             _charStrength.Validating+=OnValidateStrength;
             // 
             // _charAgility
@@ -191,6 +193,7 @@
             _charAgility.PlaceholderText="1-100";
             _charAgility.Size=new Size(100, 23);
             _charAgility.TabIndex=15;
+            _charAgility.Text="50";
             _charAgility.Validating+=OnValidateAgility;
             // 
             // _charIntelligence
@@ -200,6 +203,7 @@
             _charIntelligence.PlaceholderText="1-100";
             _charIntelligence.Size=new Size(100, 23);
             _charIntelligence.TabIndex=14;
+            _charIntelligence.Text="50";
             _charIntelligence.Validating+=OnValidateIntelligence;
             // 
             // _charConstitution
@@ -209,6 +213,7 @@
             _charConstitution.PlaceholderText="1-100";
             _charConstitution.Size=new Size(100, 23);
             _charConstitution.TabIndex=16;
+            _charConstitution.Text="50";
             _charConstitution.Validating+=OnValidateConstitution;
             // 
             // _charCharisma
@@ -218,6 +223,7 @@
             _charCharisma.PlaceholderText="1-100";
             _charCharisma.Size=new Size(100, 23);
             _charCharisma.TabIndex=17;
+            _charCharisma.Text="50";
             _charCharisma.Validating+=OnValidateCharisma;
             // 
             // _btnSave
@@ -249,6 +255,26 @@
             _errors.BlinkStyle=ErrorBlinkStyle.NeverBlink;
             _errors.ContainerControl=this;
             // 
+            // label10
+            // 
+            label10.AutoSize=true;
+            label10.Font=new Font("Segoe UI", 14F, FontStyle.Underline, GraphicsUnit.Point);
+            label10.Location=new Point(7, 221);
+            label10.Name="label10";
+            label10.Size=new Size(159, 25);
+            label10.TabIndex=20;
+            label10.Text="Attributes (1-100)";
+            // 
+            // label11
+            // 
+            label11.AutoSize=true;
+            label11.Font=new Font("Segoe UI", 14F, FontStyle.Underline, GraphicsUnit.Point);
+            label11.Location=new Point(12, 9);
+            label11.Name="label11";
+            label11.Size=new Size(156, 25);
+            label11.TabIndex=21;
+            label11.Text="Character Details";
+            // 
             // CharacterForm
             // 
             AcceptButton=_btnSave;
@@ -257,6 +283,8 @@
             AutoValidate=AutoValidate.EnableAllowFocusChange;
             CancelButton=_btnCancel;
             ClientSize=new Size(800, 450);
+            Controls.Add(label11);
+            Controls.Add(label10);
             Controls.Add(_btnCancel);
             Controls.Add(_btnSave);
             Controls.Add(_charName);
@@ -277,6 +305,7 @@
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
+            FormBorderStyle=FormBorderStyle.FixedToolWindow;
             MaximizeBox=false;
             MinimizeBox=false;
             Name="CharacterForm";
@@ -311,5 +340,7 @@
         private Button _btnSave;
         private Button _btnCancel;
         private ErrorProvider _errors;
+        private Label label10;
+        private Label label11;
     }
 }

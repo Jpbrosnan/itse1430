@@ -31,7 +31,7 @@
             _mainMenu=new MenuStrip();
             fileToolStripMenuItem=new ToolStripMenuItem();
             exitToolStripMenuItem=new ToolStripMenuItem();
-            moviesToolStripMenuItem=new ToolStripMenuItem();
+            characterToolStripMenuItem=new ToolStripMenuItem();
             addToolStripMenuItem=new ToolStripMenuItem();
             editToolStripMenuItem=new ToolStripMenuItem();
             deleteToolStripMenuItem=new ToolStripMenuItem();
@@ -43,7 +43,7 @@
             // 
             // _mainMenu
             // 
-            _mainMenu.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, moviesToolStripMenuItem, helpToolStripMenuItem });
+            _mainMenu.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem, characterToolStripMenuItem, helpToolStripMenuItem });
             _mainMenu.Location=new Point(0, 0);
             _mainMenu.Name="_mainMenu";
             _mainMenu.Size=new Size(800, 24);
@@ -60,37 +60,40 @@
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name="exitToolStripMenuItem";
-            exitToolStripMenuItem.Size=new Size(93, 22);
+            exitToolStripMenuItem.Size=new Size(180, 22);
             exitToolStripMenuItem.Text="Exit";
             exitToolStripMenuItem.Click+=OnFileExit;
             // 
-            // moviesToolStripMenuItem
+            // characterToolStripMenuItem
             // 
-            moviesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { addToolStripMenuItem, editToolStripMenuItem, deleteToolStripMenuItem });
-            moviesToolStripMenuItem.Name="moviesToolStripMenuItem";
-            moviesToolStripMenuItem.Size=new Size(70, 20);
-            moviesToolStripMenuItem.Text="&Character";
+            characterToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { addToolStripMenuItem, editToolStripMenuItem, deleteToolStripMenuItem });
+            characterToolStripMenuItem.Name="characterToolStripMenuItem";
+            characterToolStripMenuItem.Size=new Size(70, 20);
+            characterToolStripMenuItem.Text="&Character";
             // 
             // addToolStripMenuItem
             // 
             addToolStripMenuItem.Name="addToolStripMenuItem";
-            addToolStripMenuItem.Size=new Size(180, 22);
+            addToolStripMenuItem.ShortcutKeys=Keys.Control|Keys.N;
+            addToolStripMenuItem.Size=new Size(141, 22);
             addToolStripMenuItem.Text="New";
-            this.addToolStripMenuItem.Click += new System.EventHandler(this.OnNewCharacter);
+            addToolStripMenuItem.Click+=OnNewCharacter;
             // 
             // editToolStripMenuItem
             // 
             editToolStripMenuItem.Name="editToolStripMenuItem";
-            editToolStripMenuItem.Size=new Size(180, 22);
+            editToolStripMenuItem.ShortcutKeys=Keys.Control|Keys.O;
+            editToolStripMenuItem.Size=new Size(141, 22);
             editToolStripMenuItem.Text="Edit";
-            this.editToolStripMenuItem.Click += new System.EventHandler(this.OnEditCharacter);
+            editToolStripMenuItem.Click+=OnEditCharacter;
             // 
             // deleteToolStripMenuItem
             // 
             deleteToolStripMenuItem.Name="deleteToolStripMenuItem";
-            deleteToolStripMenuItem.Size=new Size(180, 22);
+            deleteToolStripMenuItem.ShortcutKeys=Keys.Delete;
+            deleteToolStripMenuItem.Size=new Size(141, 22);
             deleteToolStripMenuItem.Text="Delete";
-            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.OnDeleteCharacter);
+            deleteToolStripMenuItem.Click+=OnDeleteCharacter;
             // 
             // helpToolStripMenuItem
             // 
@@ -125,8 +128,9 @@
             Controls.Add(_lstCharacters);
             Controls.Add(_mainMenu);
             MainMenuStrip=_mainMenu;
+            MinimumSize=new Size(300, 200);
             Name="MainForm";
-            Text="Adventure Game";
+            Text="Jonathan Brosnan Adventure Game";
             _mainMenu.ResumeLayout(false);
             _mainMenu.PerformLayout();
             ResumeLayout(false);
@@ -137,7 +141,7 @@
         private MenuStrip _mainMenu;
         private ToolStripMenuItem fileToolStripMenuItem;
         private ToolStripMenuItem exitToolStripMenuItem;
-        private ToolStripMenuItem moviesToolStripMenuItem;
+        private ToolStripMenuItem characterToolStripMenuItem;
         private ToolStripMenuItem addToolStripMenuItem;
         private ToolStripMenuItem editToolStripMenuItem;
         private ToolStripMenuItem deleteToolStripMenuItem;

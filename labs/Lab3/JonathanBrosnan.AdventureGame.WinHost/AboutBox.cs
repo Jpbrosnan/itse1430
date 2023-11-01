@@ -14,31 +14,15 @@ namespace JonathanBrosnan.AdventureGame.WinHost
         public AboutBox ()
         {
             InitializeComponent();
-            this.Text = String.Format("About {0}", AssemblyTitle);
-            this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
-            //this.labelCopyright.Text = AssemblyCopyright;
-            this.labelCompanyName.Text = AssemblyCompany;
-            //this.textBoxDescription.Text = AssemblyDescription;
+            Text = "About Box";
+            labelProductName.Text = "Jonathan Brosnan Adventure Game";
+            labelCompanyName.Text = "Jonathan Brosnan";
+            labelVersion.Text = "Version: 1:0:0";
+
         }
 
         #region Assembly Attribute Accessors
 
-        public string AssemblyTitle
-        {
-            get {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-                if (attributes.Length > 0)
-                {
-                    AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                    if (titleAttribute.Title != "")
-                    {
-                        return titleAttribute.Title;
-                    }
-                }
-                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
-            }
-        }
 
         public string AssemblyVersion
         {

@@ -49,15 +49,16 @@
             tableLayoutPanel.Controls.Add(labelCompanyName, 1, 1);
             tableLayoutPanel.Controls.Add(okButton, 1, 5);
             tableLayoutPanel.Dock=DockStyle.Fill;
+            tableLayoutPanel.Font=new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
             tableLayoutPanel.Location=new Point(10, 10);
             tableLayoutPanel.Margin=new Padding(4, 3, 4, 3);
             tableLayoutPanel.Name="tableLayoutPanel";
             tableLayoutPanel.RowCount=6;
             tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
-            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 38.11075F));
+            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10.7491856F));
+            tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 20.8469048F));
             tableLayoutPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 10F));
             tableLayoutPanel.Size=new Size(487, 307);
             tableLayoutPanel.TabIndex=0;
@@ -84,8 +85,8 @@
             labelProductName.Name="labelProductName";
             labelProductName.Size=new Size(316, 20);
             labelProductName.TabIndex=19;
-            labelProductName.Text="Product: 'Jonathan Brosnan Adventure Game\r\n'";
-            labelProductName.TextAlign=ContentAlignment.MiddleLeft;
+            labelProductName.Text="Product: 'Jonathan Brosnan Adventure Game'";
+            labelProductName.TextAlign=ContentAlignment.BottomCenter;
             // 
             // labelVersion
             // 
@@ -97,7 +98,7 @@
             labelVersion.Size=new Size(316, 20);
             labelVersion.TabIndex=0;
             labelVersion.Text="Version: '1.0.0'";
-            labelVersion.TextAlign=ContentAlignment.MiddleLeft;
+            labelVersion.TextAlign=ContentAlignment.MiddleCenter;
             // 
             // labelCompanyName
             // 
@@ -109,7 +110,7 @@
             labelCompanyName.Size=new Size(316, 20);
             labelCompanyName.TabIndex=22;
             labelCompanyName.Text="Company: Jonathan Brosnan";
-            labelCompanyName.TextAlign=ContentAlignment.MiddleLeft;
+            labelCompanyName.TextAlign=ContentAlignment.MiddleCenter;
             // 
             // okButton
             // 

@@ -38,8 +38,10 @@ namespace JonathanBrosnan.AdventureGame.WinHost
         {
             var character = GetSelectedCharacter();
             if (character == null)
+            {
+                MessageBox.Show(this, "No characters to edit!.", "Edit Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
-
+            }
             var item = new CharacterForm();
             item.Text = "Edit Character";
             item.Character = character;
@@ -63,8 +65,10 @@ namespace JonathanBrosnan.AdventureGame.WinHost
         {
             var character = GetSelectedCharacter();
             if (character == null)
+            {
+                MessageBox.Show(this, "No characters to delete!", "Delete Failed");
                 return;
-
+            }
             if (!Confirm("Delete", $"Are you sure you want to delete '{character.Name}'?"))
                 return;
 
@@ -74,7 +78,7 @@ namespace JonathanBrosnan.AdventureGame.WinHost
         }
         protected override void OnFormClosing ( FormClosingEventArgs e )
         {
-            if (!Confirm("Do you want to exit?", "Exit"))
+            if (!Confirm("Confirmation", "Do you really want to exit?"))
             {
                 e.Cancel = true;
                 return;
@@ -113,6 +117,6 @@ namespace JonathanBrosnan.AdventureGame.WinHost
 
         private CharacterDatabase _database = new CharacterDatabase();
 
-        
+
     }
 }

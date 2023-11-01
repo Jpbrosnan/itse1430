@@ -8,12 +8,12 @@ namespace JonathanBrosnan.AdventureGame;
 /// </summary>
 public class Character
 {
-
+    /*
     /// <summary>Initializes the Movie class.</summary>
     public Character ()
     {
     }
-
+    
     /// <summary>Initializes the Movie class.</summary>
     /// <param name="id">Identifier of the movie.</param>
     public Character ( int id ) : this(id, "")
@@ -23,13 +23,14 @@ public class Character
     public Character ( string name ) : this(0, name)
     {
     }
+    
 
     public Character ( int id, string name )
     {
         Id = id;
         Name = name;
     }
-
+    */
 
     public int Id { get; set; }
 
@@ -193,7 +194,7 @@ public class Character
             return false;
         }
 
-        message = "Test";
+        message = "";
         return true;
     }
 
@@ -265,57 +266,6 @@ public class Character
         return $"Name: {Name}  Profession: {Profession}  Race: {Race} Biography: {Biography}     Strength: {Strength}    Intelligence: {Intelligence}    Agility: {Agility}    Constitution: {Constitution}    Charisma: {Charisma})";
     }
     
-    public IEnumerable<ValidationResult> Validate ( ValidationContext validationContext )
-    {
-
-        if (String.IsNullOrEmpty(Name))
-        {
-            yield return new ValidationResult("Name is required");
-        }
-
-        /*
-        if (!ValidateProfession(Profession))
-        {
-            message = "Profession is invalid. Profession must be one of the following: Fighter, Hunter, Priest, Rogue, Wizard";
-            return false;
-        }
-
-        if (!ValidateRace(_race))
-        {
-            message = "Race value is invalid. Race value must be one of the following: Dwarf, Elf, Gnome, Half Elf, Human";
-            return false;
-        }
-
-        if (!CheckAttributeRange(_strength))
-        {
-            message = CreateAttributeWarning("strength");
-            return false;
-        }
-
-        if (!CheckAttributeRange(_intelligence))
-        {
-            message = CreateAttributeWarning("intelligence");
-            return false;
-        }
-
-        if (!CheckAttributeRange(_agility))
-        {
-            message = CreateAttributeWarning("agility");
-            return false;
-        }
-
-        if (!CheckAttributeRange(_constitution))
-        {
-            message = CreateAttributeWarning("constitution");
-            return false;
-        }
-
-        if (!CheckAttributeRange(_charisma))
-        {
-            message = CreateAttributeWarning("charisma");
-            return false;
-        }
-     */   
-    }
+    
     }
 
