@@ -1,4 +1,12 @@
-﻿namespace Nile.Windows
+﻿/*
+ * ITSE 1430
+ * Product Database Project
+ * Name: Jonathan Brosnan
+ * Lab 4 Final
+ * Last Updated: 12/06/23
+ */
+
+namespace Nile.Windows
 {
     partial class AboutBox1
     {

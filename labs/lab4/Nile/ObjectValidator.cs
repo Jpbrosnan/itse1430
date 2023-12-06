@@ -1,6 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿/*
+ * ITSE 1430
+ * Product Database Project
+ * Name: Jonathan Brosnan
+ * Lab 4 Final
+ * Last Updated: 12/06/23
+ */
 
-namespace MovieLibrary;
+using System.ComponentModel.DataAnnotations;
+
+namespace Nile;
 
 /// <summary>Provides support for validating objects.</summary>
 public static class ObjectValidator
@@ -20,8 +28,6 @@ public static class ObjectValidator
             results = new ValidationResult[0];
             return true;
         };
-
-        //_notUsed = 0;
 
         results = items;
         return false;

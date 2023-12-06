@@ -1,5 +1,9 @@
 /*
  * ITSE 1430
+ * Product Database Project
+ * Name: Jonathan Brosnan
+ * Lab 4 Final
+ * Last Updated: 12/06/23
  */
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

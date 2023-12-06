@@ -1,5 +1,9 @@
 /*
  * ITSE 1430
+ * Product Database Project
+ * Name: Jonathan Brosnan
+ * Lab 4 Final
+ * Last Updated: 12/06/23
  */
 using System.ComponentModel.DataAnnotations;
 
@@ -16,27 +20,23 @@ namespace Nile
         public string Name
         {
             get { return _name ?? ""; }
-            set { _name = value?.Trim(); }
-        }
+            set { _name = value?.Trim() ?? ""; }
+        } 
         
         /// <summary>Gets or sets the description.</summary>
         public string Description
         {
             get { return _description ?? ""; }
-            set { _description = value?.Trim(); }
+            set { _description = value?.Trim() ?? ""; }
         }
 
         /// <summary>Gets or sets the price.</summary>
-        public decimal Price { get; set; } = 0;      
+        public decimal Price { get; set; } = 0;
 
         /// <summary>Determines if discontinued.</summary>
-        public bool IsDiscontinued { get; set; }
+        public bool IsDiscontinued { get; set; } = false;
 
-        public override string ToString()
-        {
-            return Name;
-        }
-
+        /// <inheritdoc />
         public IEnumerable<ValidationResult> Validate ( ValidationContext validationContext )
         {
             
@@ -46,6 +46,10 @@ namespace Nile
                 yield return new ValidationResult("Name is required");
             if (Price < 0)
                 yield return new ValidationResult("Price must be greater than or equal to 0");
+            if(Price >= Decimal.MaxValue)
+                yield return new ValidationResult("Price value is too large");
+
+
         }
 
         #region Private Members

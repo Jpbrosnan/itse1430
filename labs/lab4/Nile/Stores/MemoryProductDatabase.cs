@@ -1,5 +1,9 @@
 /*
  * ITSE 1430
+ * Product Database Project
+ * Name: Jonathan Brosnan
+ * Lab 4 Final
+ * Last Updated: 12/06/23
  */
 namespace Nile.Stores
 {
@@ -73,18 +77,10 @@ namespace Nile.Stores
         //Find a product by ID
         protected override Product FindProduct ( int id )
         {
-            /*
-            foreach (var product in _products)
-            {
-                if (product.Id == id)
-                    return product;
-            };
-
-            return null;
-            */
             return _products.FirstOrDefault(x => x.Id == id);
         }
 
+        //Find a product by name
         protected override Product FindByName ( string name )
         {
             return _products.FirstOrDefault(x => String.Equals(name, x.Name, StringComparison.OrdinalIgnoreCase));

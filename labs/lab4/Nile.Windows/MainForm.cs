@@ -1,28 +1,31 @@
 /*
  * ITSE 1430
+ * Product Database Project
+ * Name: Jonathan Brosnan
+ * Lab 4 Final
+ * Last Updated: 12/06/23
  */
 using Microsoft.VisualBasic.Devices;
 
 namespace Nile.Windows
 {
+    /// <summary>
+    /// Form used for the main startup screen of the program.
+    /// </summary>
     public partial class MainForm : Form
     {
-        #region Construction
 
         public MainForm ()
         {
             InitializeComponent();
         }
-        #endregion
-
+        
         protected override void OnLoad ( EventArgs e )
         {
             base.OnLoad(e);
 
             _gridProducts.AutoGenerateColumns = false;
 
-            //var connString = Program.GetConnectionString("ProductDatabase");
-            //var connString = Program.GetConnectionString("SqlProductDatabase");
             UpdateList();
         }
 
@@ -123,6 +126,12 @@ namespace Nile.Windows
             e.SuppressKeyPress = true;
         }
 
+        //AboutBox
+        private void helpAboutToolStripMenuItem_Click ( object sender, EventArgs e )
+        {
+            var about = new AboutBox1();
+            about.ShowDialog(this);
+        }
         #endregion
 
         #region Private Members
@@ -163,15 +172,15 @@ namespace Nile.Windows
                 {
                     _database.Update(child.Product);
                     break;
-                } catch (InvalidOperationException)
+                } catch (InvalidOperationException e)
                 {
-                    MessageBox.Show(this, "Product name already exists", "Updated Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                } catch (ArgumentException)
+                    MessageBox.Show(this, e.Message, "Updated Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                } catch (ArgumentException e)
                 {
-                    MessageBox.Show(this, "Argument Product Error", "Updated Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(this, e.Message, "Updated Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 } catch (Exception ex)
                 {
-                    //Error handling
+                    
                     MessageBox.Show(this, ex.Message, "Updated Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 };
             } while (true);
@@ -189,21 +198,11 @@ namespace Nile.Windows
 
         private void UpdateList ()
         {
-            //TODO: Handle errors
+            
             IEnumerable<Product> products = null;
             try
             {
                 products = _database.GetAll();
-
-                /*
-                //Seed database if desired
-                if (initial && !products.Any() && Confirm("Seed", "Do you want to seed the database with products?"))
-                {
-                    _database.Seed();
-
-                    products = _database.GetAll();
-                };
-                */
                 products = from p in products
                          orderby p.Name, p.Price descending
                          select p;
@@ -212,23 +211,15 @@ namespace Nile.Windows
                 MessageBox.Show(this, ex.Message, "Update List Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             } finally
             {
-                _bsProducts.DataSource = products?.ToArray(); //movies?.ToArray();
+                _bsProducts.DataSource = products?.ToArray(); 
 
 
             };
 
-            //_bsProducts.DataSource = _database.GetAll();
         }
 
         private readonly IProductDatabase _database = new Nile.Stores.SqlProductDatabase(Program.GetConnectionString("ProductDatabase"));
-        //private readonly IProductDatabase _database = new Nile.Stores.MemoryProductDatabase();
         #endregion
 
-        //AboutBox
-        private void helpAboutToolStripMenuItem_Click ( object sender, EventArgs e )
-        {
-            var about = new AboutBox1();
-            about.ShowDialog(this);
-        }
     }
 }

@@ -1,13 +1,19 @@
 /*
  * ITSE 1430
+ * Product Database Project
+ * Name: Jonathan Brosnan
+ * Lab 4 Final
+ * Last Updated: 12/06/23
  */
 using System.ComponentModel;
 
-using Microsoft.VisualBasic.Devices;
-using MovieLibrary;
+
 
 namespace Nile.Windows
 {
+    /// <summary>
+    /// Form used for product create/edit functionality.
+    /// </summary>
     public partial class ProductDetailForm : Form
     {
         #region Construction
@@ -31,10 +37,14 @@ namespace Nile.Windows
         /// <summary>Gets or sets the product being shown.</summary>
         public Product Product { get; set; }
 
+        /// <summary>
+        /// Called to init form just before it is shown.
+        /// </summary>
         protected override void OnLoad ( EventArgs e )
         {
             base.OnLoad(e);
 
+            //Load product data, if any
             if (Product != null)
             {
                 _txtName.Text = Product.Name;
@@ -56,12 +66,15 @@ namespace Nile.Windows
 
         private void OnSave ( object sender, EventArgs e )
         {
+
+            //Validate and abort if necessary
             if (!ValidateChildren())
             {
                 DialogResult = DialogResult.None;
                 return;
             };
 
+            //Populate from the UI
             var product = new Product()
             {
                 Id = Product?.Id ?? 0,
@@ -71,11 +84,10 @@ namespace Nile.Windows
                 IsDiscontinued = _chkDiscontinued.Checked,
             };
 
-            //TODO: Validate product
+            
             if (!ObjectValidator.TryValidate(product, out var results))
             {
                 var error = results.First();
-                //var error = Enumerable.First(results);
                 MessageBox.Show(this, error.ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                 DialogResult = DialogResult.None;
@@ -85,7 +97,7 @@ namespace Nile.Windows
             DialogResult = DialogResult.OK;
             Close();
         }
-
+        
         private void OnValidatingName ( object sender, CancelEventArgs e )
         {
             var tb = sender as TextBox;
@@ -102,7 +114,8 @@ namespace Nile.Windows
             if (GetPrice(tb) < 0)
             {
                 e.Cancel = true;
-                _errors.SetError(_txtPrice, "Price must be >= 0.");
+                _errors.SetError(_txtPrice, "Price must be greater than or equal to 0 && less than Decimal.MaxValue");
+
             } else
                 _errors.SetError(_txtPrice, "");
         }

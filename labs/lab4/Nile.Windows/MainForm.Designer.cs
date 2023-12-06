@@ -1,3 +1,11 @@
+/*
+ * ITSE 1430
+ * Product Database Project
+ * Name: Jonathan Brosnan
+ * Lab 4 Final
+ * Last Updated: 12/06/23
+ */
+
 namespace Nile.Windows
 {
     partial class MainForm
@@ -226,7 +234,7 @@ namespace Nile.Windows
         private DataGridView _gridProducts;
         private BindingSource _bsProducts;
         //private DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
+        //private DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
         private DataGridViewCheckBoxColumn isDiscontinuedDataGridViewCheckBoxColumn;
         private DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
