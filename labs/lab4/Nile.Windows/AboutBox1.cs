@@ -14,11 +14,11 @@ namespace Nile.Windows
         public AboutBox1 ()
         {
             InitializeComponent();
-            this.Text = String.Format("About {0}", AssemblyTitle);
-            this.labelProductName.Text = "Jonathan Brosnan";
-            this.labelVersion.Text = "FALL 2023";
-            this.labelCopyright.Text = "ITSE 1430";
-            this.labelCompanyName.Text = "Lab 4";
+            Text = String.Format("About {0}", AssemblyTitle);
+            labelProductName.Text = "Jonathan Brosnan";
+            labelVersion.Text = "FALL 2023";
+            labelCopyright.Text = "ITSE 1430";
+            labelCompanyName.Text = "Lab 4";
         }
 
         #region Assembly Attribute Accessors

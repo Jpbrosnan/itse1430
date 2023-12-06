@@ -83,7 +83,7 @@ namespace Nile.Stores
 
             int id = product.Id;
             //TODO: Validate product
-            if (id <= 0)
+            if (id < 0)
                 throw new ArgumentOutOfRangeException(nameof(id), "ID must be greater or equal than 0");
 
       
@@ -125,8 +125,7 @@ namespace Nile.Stores
 
         protected abstract void RemoveCore( int id );
 
-        protected abstract Product UpdateCore( Product existing, Product newItem );
-
+        protected abstract Product UpdateCore ( Product existing, Product newItem );
         protected abstract Product AddCore( Product product );
 
         protected abstract Product FindProduct ( int id );

@@ -225,7 +225,7 @@ namespace Nile.Windows
         private ToolStripMenuItem _miProductDelete;
         private DataGridView _gridProducts;
         private BindingSource _bsProducts;
-        private DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+        //private DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
         private DataGridViewCheckBoxColumn isDiscontinuedDataGridViewCheckBoxColumn;

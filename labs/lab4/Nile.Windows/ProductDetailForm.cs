@@ -3,6 +3,9 @@
  */
 using System.ComponentModel;
 
+using Microsoft.VisualBasic.Devices;
+using MovieLibrary;
+
 namespace Nile.Windows
 {
     public partial class ProductDetailForm : Form
@@ -55,6 +58,7 @@ namespace Nile.Windows
         {
             if (!ValidateChildren())
             {
+                DialogResult = DialogResult.None;
                 return;
             };
 
@@ -68,7 +72,15 @@ namespace Nile.Windows
             };
 
             //TODO: Validate product
+            if (!ObjectValidator.TryValidate(product, out var results))
+            {
+                var error = results.First();
+                //var error = Enumerable.First(results);
+                MessageBox.Show(this, error.ErrorMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
+                DialogResult = DialogResult.None;
+                return;
+            };
             Product = product;
             DialogResult = DialogResult.OK;
             Close();

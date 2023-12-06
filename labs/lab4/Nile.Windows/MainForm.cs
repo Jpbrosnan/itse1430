@@ -21,7 +21,8 @@ namespace Nile.Windows
 
             _gridProducts.AutoGenerateColumns = false;
 
-            var connString = Program.GetConnectionString("ProductDatabase");
+            //var connString = Program.GetConnectionString("ProductDatabase");
+            //var connString = Program.GetConnectionString("SqlProductDatabase");
             UpdateList();
         }
 
@@ -152,6 +153,7 @@ namespace Nile.Windows
             var child = new ProductDetailForm();
             child.Product = product;
             
+            
             do
             {
                 if (child.ShowDialog(this) != DialogResult.OK)
@@ -207,10 +209,10 @@ namespace Nile.Windows
                          select p;
             } catch (Exception ex)
             {
-                MessageBox.Show(this, "Unable to retrieve products.", "Get Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(this, ex.Message, "Update List Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             } finally
             {
-                _bsProducts.DataSource = products?.ToArray();//_database.GetAll();
+                _bsProducts.DataSource = products?.ToArray(); //movies?.ToArray();
 
 
             };
@@ -218,7 +220,8 @@ namespace Nile.Windows
             //_bsProducts.DataSource = _database.GetAll();
         }
 
-        private readonly IProductDatabase _database = new Nile.Stores.MemoryProductDatabase();
+        private readonly IProductDatabase _database = new Nile.Stores.SqlProductDatabase(Program.GetConnectionString("ProductDatabase"));
+        //private readonly IProductDatabase _database = new Nile.Stores.MemoryProductDatabase();
         #endregion
 
         //AboutBox
