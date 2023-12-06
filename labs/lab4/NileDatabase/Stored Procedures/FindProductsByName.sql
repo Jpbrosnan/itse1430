@@ -7,7 +7,7 @@
 --    Price | MONEY | Product price
 --    Description | STRING | Product description
 --    IsDiscontinued | BIT | Is the product discontinued?
-CREATE PROCEDURE [dbo].[FindProductByName]
+CREATE PROCEDURE [dbo].[FindProductsByName]
 	@name VARCHAR(100)
 AS BEGIN
     SET NOCOUNT ON;

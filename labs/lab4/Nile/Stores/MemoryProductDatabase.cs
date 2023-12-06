@@ -71,8 +71,9 @@ namespace Nile.Stores
         }
 
         //Find a product by ID
-        private Product FindProduct ( int id )
+        protected override Product FindProduct ( int id )
         {
+            /*
             foreach (var product in _products)
             {
                 if (product.Id == id)
@@ -80,8 +81,14 @@ namespace Nile.Stores
             };
 
             return null;
+            */
+            return _products.FirstOrDefault(x => x.Id == id);
         }
 
+        protected override Product FindByName ( string name )
+        {
+            return _products.FirstOrDefault(x => String.Equals(name, x.Name, StringComparison.OrdinalIgnoreCase));
+        }
         private List<Product> _products = new List<Product>();
         private int _nextId = 1;
         #endregion

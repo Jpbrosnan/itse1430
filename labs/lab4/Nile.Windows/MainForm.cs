@@ -1,19 +1,21 @@
 /*
  * ITSE 1430
  */
+using Microsoft.VisualBasic.Devices;
+
 namespace Nile.Windows
 {
     public partial class MainForm : Form
     {
         #region Construction
 
-        public MainForm()
+        public MainForm ()
         {
             InitializeComponent();
         }
         #endregion
 
-        protected override void OnLoad(EventArgs e)
+        protected override void OnLoad ( EventArgs e )
         {
             base.OnLoad(e);
 
@@ -25,45 +27,74 @@ namespace Nile.Windows
 
         #region Event Handlers
 
-        private void OnFileExit(object sender, EventArgs e)
+        private void OnFileExit ( object sender, EventArgs e )
         {
             Close();
         }
 
-        private void OnProductAdd(object sender, EventArgs e)
+        private void OnProductAdd ( object sender, EventArgs e )
         {
             var child = new ProductDetailForm("Product Details");
-            if (child.ShowDialog(this) != DialogResult.OK)
+            if (child ==  null)
                 return;
+            do
+            {
+                if (child.ShowDialog(this) != DialogResult.OK)
+                    return;
 
-            //TODO: Handle errors
-            //Save product
-            _database.Add(child.Product);
+                try
+                {
+                    //Save Product        
+                    _database.Add(child.Product);
+                    break;
+                } catch (NotImplementedException)
+                {
+                    //I really cannot do anything about this but I'll try...
+                    throw;
+                } catch (InvalidOperationException)
+                {
+                    MessageBox.Show(this, "Product already exists", "Add Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                } catch (ArgumentException)
+                {
+                    MessageBox.Show(this, "Argument Product Error", "Add Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                } catch (Exception ex)
+                {
+                    //Error handling
+                    MessageBox.Show(this, ex.Message, "Add Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                };
+            } while (true);
+
+
             UpdateList();
         }
 
-        private void OnProductEdit(object sender, EventArgs e)
+        private void OnProductEdit ( object sender, EventArgs e )
         {
+       
             var product = GetSelectedProduct();
-            if (product == null)
-            {
-                MessageBox.Show("No products available.");
-                return;
-            };
+            if (product != null)
+                EditProduct(product);
+            else
+                MessageBox.Show(this, "No Product to Edit", "Edit Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            
 
-            EditProduct(product);
+
         }
 
-        private void OnProductDelete(object sender, EventArgs e)
+        private void OnProductDelete ( object sender, EventArgs e )
         {
+            
+            
             var product = GetSelectedProduct();
-            if (product == null)
-                return;
+            if (product != null)
+                DeleteProduct(product);
+            else
+                MessageBox.Show(this, "No Products to Delete", "Delete Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            
 
-            DeleteProduct(product);
         }
 
-        private void OnEditRow(object sender, DataGridViewCellEventArgs e)
+        private void OnEditRow ( object sender, DataGridViewCellEventArgs e )
         {
             var grid = sender as DataGridView;
 
@@ -78,7 +109,7 @@ namespace Nile.Windows
                 EditProduct(item);
         }
 
-        private void OnKeyDownGrid(object sender, KeyEventArgs e)
+        private void OnKeyDownGrid ( object sender, KeyEventArgs e )
         {
             if (e.KeyCode != Keys.Delete)
                 return;
@@ -95,33 +126,58 @@ namespace Nile.Windows
 
         #region Private Members
 
-        private void DeleteProduct(Product product)
+        private void DeleteProduct ( Product product )
         {
-            //Confirm
+           
             if (MessageBox.Show(this, $"Are you sure you want to delete '{product.Name}'?",
                                 "Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 return;
 
-            //TODO: Handle errors
-            //Delete product
-            _database.Remove(product.Id);
-            UpdateList();
+
+            try
+            {
+                _database.Remove(product.Id);
+                UpdateList();
+
+            } catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, "Delete Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            };
         }
 
-        private void EditProduct(Product product)
+        private void EditProduct ( Product product )
         {
-            var child = new ProductDetailForm("Product Details");
-            child.Product = product;
-            if (child.ShowDialog(this) != DialogResult.OK)
-                return;
+            
 
-            //TODO: Handle errors
-            //Save product
-            _database.Update(child.Product);
+            var child = new ProductDetailForm();
+            child.Product = product;
+            
+            do
+            {
+                if (child.ShowDialog(this) != DialogResult.OK)
+                    return;
+
+                try
+                {
+                    _database.Update(child.Product);
+                    break;
+                } catch (InvalidOperationException)
+                {
+                    MessageBox.Show(this, "Product name already exists", "Updated Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                } catch (ArgumentException)
+                {
+                    MessageBox.Show(this, "Argument Product Error", "Updated Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                } catch (Exception ex)
+                {
+                    //Error handling
+                    MessageBox.Show(this, ex.Message, "Updated Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                };
+            } while (true);
+
             UpdateList();
         }
 
-        private Product GetSelectedProduct()
+        private Product GetSelectedProduct ()
         {
             if (_gridProducts.SelectedRows.Count > 0)
                 return _gridProducts.SelectedRows[0].DataBoundItem as Product;
@@ -129,14 +185,47 @@ namespace Nile.Windows
             return null;
         }
 
-        private void UpdateList()
+        private void UpdateList ()
         {
             //TODO: Handle errors
+            IEnumerable<Product> products = null;
+            try
+            {
+                products = _database.GetAll();
 
-            _bsProducts.DataSource = _database.GetAll();
+                /*
+                //Seed database if desired
+                if (initial && !products.Any() && Confirm("Seed", "Do you want to seed the database with products?"))
+                {
+                    _database.Seed();
+
+                    products = _database.GetAll();
+                };
+                */
+                products = from p in products
+                         orderby p.Name, p.Price descending
+                         select p;
+            } catch (Exception ex)
+            {
+                MessageBox.Show(this, "Unable to retrieve products.", "Get Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } finally
+            {
+                _bsProducts.DataSource = products?.ToArray();//_database.GetAll();
+
+
+            };
+
+            //_bsProducts.DataSource = _database.GetAll();
         }
 
         private readonly IProductDatabase _database = new Nile.Stores.MemoryProductDatabase();
         #endregion
+
+        //AboutBox
+        private void helpAboutToolStripMenuItem_Click ( object sender, EventArgs e )
+        {
+            var about = new AboutBox1();
+            about.ShowDialog(this);
+        }
     }
 }
